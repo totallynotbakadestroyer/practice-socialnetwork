@@ -2,7 +2,7 @@ package com.simplesocialnetwork.simplesocialnetwork.models;
 
 import javax.persistence.*;
 import java.util.Date;
-
+@Entity
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,11 +13,11 @@ public class Message {
     private Date dateSent;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "RECEIVER_ID")
     private User receiver;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "SENDER_ID")
     private User sender;
 
     public Long getId() {
