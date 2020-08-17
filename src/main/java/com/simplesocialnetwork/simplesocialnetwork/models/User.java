@@ -3,21 +3,25 @@ package com.simplesocialnetwork.simplesocialnetwork.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Date;
+
 @Entity
-@Table(name = "USER")
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "USER_EMAIL", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
-
+    @Column(name = "first_name", nullable = false)
     private String firstName;
+    @Column(name = "last_name", nullable = false)
     private String lastName;
+    @Column(name = "password", nullable = false)
     private String password;
-    private int age;
+    @Column(name = "date_of_birth", nullable = false)
+    private Date dateOfBirth;
     private String avatarLink;
 
     public String getEmail() {
@@ -57,12 +61,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getAge() {
-        return age;
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getAvatarLink() {
@@ -73,12 +77,12 @@ public class User {
         this.avatarLink = avatarLink;
     }
 
-    public User(String email, String password, String firstName, String lastName, int age) {
+    public User(String email, String password, String firstName, String lastName, Date dateOfBirth) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public User() {
