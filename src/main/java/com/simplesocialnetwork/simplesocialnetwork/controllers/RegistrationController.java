@@ -20,7 +20,7 @@ public class RegistrationController {
         return userRepository.findAll();
     }
 
-    @PostMapping("/api/users")
+    @PostMapping(value = "/api/users", consumes = "application/json")
     public User addUser(@RequestBody User user){
         return userRepository.save(user);
     }
