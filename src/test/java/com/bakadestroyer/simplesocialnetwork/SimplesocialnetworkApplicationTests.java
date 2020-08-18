@@ -1,4 +1,4 @@
-package com.simplesocialnetwork.simplesocialnetwork;
+package com.bakadestroyer.simplesocialnetwork;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

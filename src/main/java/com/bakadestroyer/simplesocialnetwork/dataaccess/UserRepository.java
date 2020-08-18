@@ -1,6 +1,6 @@
-package com.simplesocialnetwork.simplesocialnetwork.dataaccess;
+package com.bakadestroyer.simplesocialnetwork.dataaccess;
 
-import com.simplesocialnetwork.simplesocialnetwork.models.User;
+import com.bakadestroyer.simplesocialnetwork.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository <User, Long> {

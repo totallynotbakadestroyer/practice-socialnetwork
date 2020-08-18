@@ -1,4 +1,4 @@
-package com.simplesocialnetwork.simplesocialnetwork.models;
+package com.bakadestroyer.simplesocialnetwork.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -1,9 +1,9 @@
-package com.simplesocialnetwork.simplesocialnetwork.controllers;
+package com.bakadestroyer.simplesocialnetwork.controllers;
 
-import com.simplesocialnetwork.simplesocialnetwork.dataaccess.MessageRepository;
-import com.simplesocialnetwork.simplesocialnetwork.dataaccess.UserRepository;
-import com.simplesocialnetwork.simplesocialnetwork.models.Message;
-import com.simplesocialnetwork.simplesocialnetwork.models.User;
+import com.bakadestroyer.simplesocialnetwork.dataaccess.MessageRepository;
+import com.bakadestroyer.simplesocialnetwork.dataaccess.UserRepository;
+import com.bakadestroyer.simplesocialnetwork.models.Message;
+import com.bakadestroyer.simplesocialnetwork.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

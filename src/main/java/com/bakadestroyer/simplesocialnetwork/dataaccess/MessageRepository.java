@@ -1,6 +1,6 @@
-package com.simplesocialnetwork.simplesocialnetwork.dataaccess;
+package com.bakadestroyer.simplesocialnetwork.dataaccess;
 
-import com.simplesocialnetwork.simplesocialnetwork.models.Message;
+import com.bakadestroyer.simplesocialnetwork.models.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
