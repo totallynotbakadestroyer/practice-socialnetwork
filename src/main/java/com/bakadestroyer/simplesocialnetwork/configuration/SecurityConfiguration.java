@@ -4,6 +4,7 @@ import com.bakadestroyer.simplesocialnetwork.dataaccess.UserRepository;
 import com.bakadestroyer.simplesocialnetwork.security.JwtAuthentificationFilter;
 import com.bakadestroyer.simplesocialnetwork.security.JwtAuthorizationFilter;
 import com.bakadestroyer.simplesocialnetwork.services.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
 @Configuration
 @EnableWebSecurity
@@ -40,11 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(new JwtAuthentificationFilter(authenticationManager()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository))
-                .authorizeRequests()
-                .antMatchers("/*").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/feed").authenticated();
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository));
     }
     @Bean
     DaoAuthenticationProvider authenticationProvider(){
