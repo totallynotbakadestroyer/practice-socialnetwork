@@ -51,6 +51,7 @@
 
 import Register from '@/components/RegisterForm.vue';
 import axios from 'axios';
+import router from '@/router';
 
 export default {
   name: 'login',
@@ -74,8 +75,10 @@ export default {
         },
       }).then((response) => {
         console.log(response);
+        router.push('/feed');
       }, (error) => {
         console.log(error);
+        router.push('/die');
       });
     },
   },

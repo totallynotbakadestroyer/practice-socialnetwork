@@ -1,9 +1,10 @@
 package com.bakadestroyer.simplesocialnetwork.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -20,9 +21,17 @@ public class User {
     private String lastName;
     @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "date_of_birth", nullable = false)
-    private Date dateOfBirth;
-    private String avatarLink;
+    @Column(name = "registrationDate")
+    private Date registrationDate = new Date();
+    private String role = "";
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getEmail() {
         return email;
@@ -61,20 +70,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public Date getRegistrationDate() {
+        return registrationDate;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getAvatarLink() {
-        return avatarLink;
-    }
-
-    public void setAvatarLink(String avatarLink) {
-        this.avatarLink = avatarLink;
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public User(String email, String password, String firstName, String lastName, Date dateOfBirth) {
@@ -82,9 +83,15 @@ public class User {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
     }
 
     public User() {
+    }
+
+    public List<String> getRolesList() {
+        if (this.role.length() > 0) {
+            return Arrays.asList(this.role.split(","));
+        }
+        return new ArrayList<>();
     }
 }
