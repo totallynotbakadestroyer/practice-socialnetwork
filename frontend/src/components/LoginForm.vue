@@ -74,7 +74,9 @@ export default {
           password: this.password,
         },
       }).then((response) => {
-        console.log(response);
+        let jwt = response.headers.authorization;
+        jwt = jwt.substring(jwt.lastIndexOf(' ') + 1);
+        localStorage.setItem('token', jwt);
         router.push('/feed');
       }, (error) => {
         console.log(error);
