@@ -25,6 +25,17 @@ public class User {
     private Date registrationDate = new Date();
     private String role = "";
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserInfo userInfo;
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
     public String getRole() {
         return role;
     }
