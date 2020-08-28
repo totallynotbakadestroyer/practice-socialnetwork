@@ -16,17 +16,11 @@
             <a target="_blank" href="https://vuejs.org/">Vue</a></p>
         </v-col>
         <v-col
-          offset-sm="2"
-          sm="5">
+          offset-sm="1"
+          sm="4">
           <LoginForm></LoginForm>
         </v-col>
       </v-row>
-      <v-footer
-        absolute>
-        <h3 class="ml-auto">
-          {{ new Date().getFullYear() }} - <strong>Vuealize</strong>
-        </h3>
-      </v-footer>
     </v-container>
   </v-app>
 </template>

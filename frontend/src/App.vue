@@ -1,28 +1,14 @@
 <template>
-  <router-view/>
+  <div id="app">
+    <vue-extend-layouts />
+  </div>
 </template>
 
 <script>
+import VueExtendLayouts from 'vue-extend-layout';
 
 export default {
   name: 'App',
-
-  components: {
-  },
-
-  data: () => ({
-    //
-  }),
+  components: { VueExtendLayouts },
 };
 </script>
-
-<style>
-*::-webkit-scrollbar {
-  display: none;
-}
-
-*{
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-</style>

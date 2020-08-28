@@ -15,6 +15,9 @@
                 color="success"
 
               ></v-text-field>
+              <v-alert transition="scale-transition" :value="wrongCredentials" color="red" dense>
+                Wrong email/password
+              </v-alert>
               <v-btn
                 color="accent"
                 block
@@ -50,8 +53,6 @@
 <script>
 
 import Register from '@/components/RegisterForm.vue';
-import axios from 'axios';
-import router from '@/router';
 
 export default {
   name: 'login',
@@ -62,25 +63,18 @@ export default {
     return {
       email: '',
       password: '',
+      wrongCredentials: false,
     };
   },
   methods: {
     login() {
-      axios({
-        method: 'post',
-        url: '/login',
-        data: {
-          email: this.email,
-          password: this.password,
-        },
-      }).then((response) => {
-        let jwt = response.headers.authorization;
-        jwt = jwt.substring(jwt.lastIndexOf(' ') + 1);
-        localStorage.setItem('token', jwt);
-        router.push('/feed');
-      }, (error) => {
-        console.log(error);
-        router.push('/die');
+      this.wrongCredentials = false;
+      const { email } = this;
+      const { password } = this;
+      this.$store.dispatch('login', { email, password }).then(() => {
+        this.$router.push(`/id${this.$store.getters.getUserId}`);
+      }).catch(() => {
+        this.wrongCredentials = true;
       });
     },
   },
