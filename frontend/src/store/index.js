@@ -1,14 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import * as jwtDecode from 'jwt-decode';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     token: '',
-    userId: 0,
+    userInfo: '',
     status: '',
   },
   mutations: {
@@ -18,7 +17,7 @@ export default new Vuex.Store({
     auth_success(state, authentificationInfo) {
       state.status = 'logged';
       state.token = authentificationInfo.token;
-      state.userId = authentificationInfo.userId;
+      state.userInfo = authentificationInfo.userInfo;
     },
     auth_error(state) {
       state.status = 'error';
@@ -37,8 +36,8 @@ export default new Vuex.Store({
             let token = response.headers.authorization;
             token = token.substring(token.lastIndexOf(' ') + 1);
             localStorage.setItem('token', token);
-            const userId = jwtDecode(token).id;
-            commit('auth_success', { token, userId });
+            const userInfo = response.data;
+            commit('auth_success', { token, userInfo });
             resolve(response);
           })
           .catch((error) => {
@@ -51,6 +50,7 @@ export default new Vuex.Store({
   },
   modules: {},
   getters: {
-    getUserId: (state) => state.userId,
+    getUserId: (state) => state.userInfo.id,
+    getFullName: (state) => `${state.userInfo.firstName}  ${state.userInfo.lastName}`,
   },
 });

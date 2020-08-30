@@ -4,9 +4,12 @@ import com.bakadestroyer.simplesocialnetwork.dataaccess.MessageRepository;
 import com.bakadestroyer.simplesocialnetwork.dataaccess.UserRepository;
 import com.bakadestroyer.simplesocialnetwork.exceptions.UserExistsException;
 import com.bakadestroyer.simplesocialnetwork.models.User;
+import com.bakadestroyer.simplesocialnetwork.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +29,7 @@ public class UsersController {
     }
 
     @GetMapping("/api/users")
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
@@ -35,9 +38,14 @@ public class UsersController {
         return userRepository.findById(id).orElseThrow(() -> new UserExistsException("User with such id is not found"));
     }
 
+    @GetMapping("/api/users/current")
+    public Object getCurrentUser(@AuthenticationPrincipal UserPrincipal user) {
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
+
     @PostMapping(value = "/api/users/signup", consumes = "application/json", produces = "application/json")
     public User addUser(@Valid @RequestBody User user) throws UserExistsException {
-        if(userRepository.findByEmail(user.getEmail()) != null){
+        if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new UserExistsException("User with such email is already exists: " + user.getEmail());
         }
         user.setRole("USER");
@@ -46,7 +54,7 @@ public class UsersController {
     }
 
     @DeleteMapping(value = "/api/users/{id}", consumes = "application/json")
-    public ResponseEntity deleteUser(@PathVariable Long id){
+    public ResponseEntity deleteUser(@PathVariable Long id) {
         userRepository.deleteById(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

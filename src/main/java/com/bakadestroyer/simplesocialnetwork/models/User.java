@@ -25,7 +25,7 @@ public class User {
     private String firstName;
     @Column(name = "last_name", nullable = false)
     private String lastName;
-    @JsonProperty
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Size(min = 8)
     @Column(name = "password", nullable = false)
     private String password;
@@ -62,6 +62,7 @@ public class User {
         this.role = role;
     }
 
+    @JsonIgnore
     public String getEmail() {
         return email;
     }

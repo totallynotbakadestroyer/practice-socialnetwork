@@ -51,9 +51,10 @@ public class JwtAuthentificationFilter extends UsernamePasswordAuthenticationFil
 
         String token = JWT.create()
                 .withSubject(principal.getUsername())
-                .withClaim("id", principal.getId())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
                 .sign(Algorithm.HMAC256(JwtProperties.SECRET.getBytes()));
+        response.setContentType("application/json");
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token);
+        response.getWriter().write(new ObjectMapper().writeValueAsString(principal));
     }
 }
