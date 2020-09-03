@@ -69,5 +69,9 @@ public class UserPrincipal implements UserDetails {
         return user.getLastName();
     }
 
+    public boolean isCompleted() {
+        return user.isCompleted();
+    }
+
 
 }

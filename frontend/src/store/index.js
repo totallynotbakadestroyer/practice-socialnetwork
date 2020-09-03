@@ -52,5 +52,6 @@ export default new Vuex.Store({
   getters: {
     getUserId: (state) => state.userInfo.id,
     getFullName: (state) => `${state.userInfo.firstName}  ${state.userInfo.lastName}`,
+    getCompleted: (state) => state.userInfo.completed,
   },
 });

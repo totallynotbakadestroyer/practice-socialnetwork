@@ -20,6 +20,7 @@ public class User {
     private Long id;
     @Column(name = "email", nullable = false, unique = true)
     @Email(regexp = ".+@.+\\..+")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String email;
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -32,9 +33,11 @@ public class User {
     @Column(name = "registrationDate")
     private Date registrationDate = new Date();
     private String role = "";
+    private boolean completed = false;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserInfo userInfo;
+
 
     public User(String email, String password, String firstName, String lastName) {
         this.email = email;
@@ -52,6 +55,14 @@ public class User {
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public String getRole() {

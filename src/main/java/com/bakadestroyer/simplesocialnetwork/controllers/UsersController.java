@@ -4,6 +4,7 @@ import com.bakadestroyer.simplesocialnetwork.dataaccess.MessageRepository;
 import com.bakadestroyer.simplesocialnetwork.dataaccess.UserRepository;
 import com.bakadestroyer.simplesocialnetwork.exceptions.UserExistsException;
 import com.bakadestroyer.simplesocialnetwork.models.User;
+import com.bakadestroyer.simplesocialnetwork.models.UserInfo;
 import com.bakadestroyer.simplesocialnetwork.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +53,17 @@ public class UsersController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
+
+    @PutMapping(value = "/api/users/{id}", consumes = "application/json")
+    public ResponseEntity setUserInfo(@PathVariable Long id, @RequestBody UserInfo userInfo) throws UserExistsException {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserExistsException("User with such id is not found"));
+        userInfo.setUser(user);
+        user.setUserInfo(userInfo);
+        user.setCompleted(true);
+        userRepository.save(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 
     @DeleteMapping(value = "/api/users/{id}", consumes = "application/json")
     public ResponseEntity deleteUser(@PathVariable Long id) {
