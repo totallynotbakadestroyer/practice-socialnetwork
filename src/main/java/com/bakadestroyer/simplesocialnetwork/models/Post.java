@@ -11,7 +11,9 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
+    private Long authorId;
+    private Long destinationId;
+    private String authorName;
     private Date date = new Date();
     private String postText;
     private String postImage;
@@ -25,16 +27,32 @@ public class Post {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getAuthorId() {
+        return authorId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public Date getDate() {
         return date;
+    }
+
+    public Long getDestinationId() {
+        return destinationId;
+    }
+
+    public void setDestinationId(Long destinationId) {
+        this.destinationId = destinationId;
     }
 
     public void setDate(Date date) {
