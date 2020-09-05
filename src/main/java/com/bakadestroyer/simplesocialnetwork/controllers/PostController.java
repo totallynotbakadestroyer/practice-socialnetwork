@@ -12,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,11 +24,10 @@ public class PostController {
     UserRepository userRepository;
 
     @GetMapping("/api/posts")
-    public Page<Post> getAllPosts(Pageable pageable,
-                                  @RequestParam(value = "id") Long id,
-                                @RequestParam(value = "page", required = false, defaultValue = "0") Integer page) throws UserExistsException {
+    public Page<Post> getAllPosts(@RequestParam(value = "id") Long id,
+                                  @RequestParam(value = "page", required = false, defaultValue = "0") Integer page) throws UserExistsException {
         User user = userRepository.findById(id).orElseThrow(() -> new UserExistsException("User not found"));
-        pageable = PageRequest.of(page, 5, Sort.by("date").descending());
+        Pageable pageable = PageRequest.of(page, 5, Sort.by("date").descending());
         return postRepository.findByDestinationId(user.getId(), pageable);
     }
 
@@ -40,11 +37,12 @@ public class PostController {
     }
 
     @PostMapping(consumes = "application/json", value = "/api/posts")
-    public Post addPost(@RequestBody Post post)
+    public Post addPost(@RequestBody Post post, @RequestParam(value = "destId") Long destId)
     {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setAuthorId(userPrincipal.getId());
         post.setAuthorName(userPrincipal.getFirstName() + " " + userPrincipal.getLastName());
+        post.setDestinationId(destId);
         return postRepository.save(post);
     }
 }
