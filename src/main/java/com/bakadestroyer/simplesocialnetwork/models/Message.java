@@ -1,5 +1,8 @@
 package com.bakadestroyer.simplesocialnetwork.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Date;
 @Entity
@@ -10,15 +13,22 @@ public class Message {
 
     private String text;
 
-    private Date dateSent;
+    private Date dateSent = new Date();
 
     @ManyToOne
-    @JoinColumn(name = "RECEIVER_ID")
-    private User receiver;
-
-    @ManyToOne
-    @JoinColumn(name = "SENDER_ID")
     private User sender;
+
+    @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Conversation conversation;
+
+    public Conversation getConversation() {
+        return conversation;
+    }
+
+    public void setConversation(Conversation conversation) {
+        this.conversation = conversation;
+    }
 
     public Long getId() {
         return id;
@@ -36,14 +46,6 @@ public class Message {
         return dateSent;
     }
 
-    public User getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
-    }
-
     public User getSender() {
         return sender;
     }
@@ -52,11 +54,10 @@ public class Message {
         this.sender = sender;
     }
 
-    public Message(String text, User receiver, User sender) {
+    public Message(String text, User sender, Conversation conversation) {
         this.text = text;
-        this.receiver = receiver;
         this.sender = sender;
-        this.dateSent = new Date(System.currentTimeMillis());
+        this.conversation = conversation;
     }
 
     public Message() {

@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue'),
+    component: () => import('@/views/Login.vue'),
     meta: {
       layout: 'empty',
     },
@@ -31,7 +31,15 @@ const routes = [
   {
     path: '/id:id',
     name: 'UserPage',
-    component: () => import('../views/UserPage.vue'),
+    component: () => import('@/views/UserPage.vue'),
+    meta: {
+      layout: 'primary',
+    },
+  },
+  {
+    path: '/messages',
+    name: 'Messages',
+    component: () => import('@/views/Messages.vue'),
     meta: {
       layout: 'primary',
     },
