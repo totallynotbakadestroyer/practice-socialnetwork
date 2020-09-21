@@ -140,7 +140,6 @@ export default {
   },
   data() {
     return {
-      dialog: false,
       dateOfBirth: new Date().toISOString().substr(0, 10),
       email: '',
       firstName: '',
@@ -202,8 +201,8 @@ export default {
             password: this.password,
             dateOfBirth: this.dateOfBirth,
           },
-        }).then((response) => {
-          console.log(response);
+        }).then(() => {
+          this.$emit('closeModal');
         }, (error) => {
           console.log(error);
         });

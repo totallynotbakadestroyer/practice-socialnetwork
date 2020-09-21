@@ -8,10 +8,9 @@
           sm="4"
         >
           <h1 class="green--text">Vuealize</h1>
-          <!-- eslint-disable max-len -->
-          <p><span class="green--text">Vuealize</span> is just a simple social network which was made as a practice
-            project using <a target="_blank"
-                             href="https://spring.io/">Spring</a>
+          <p><span class="green--text">Vuealize</span>
+            is just a simple social network which was made as a practice project using
+            <a target="_blank" href="https://spring.io/">Spring</a>
             and
             <a target="_blank" href="https://vuejs.org/">Vue</a></p>
         </v-col>
