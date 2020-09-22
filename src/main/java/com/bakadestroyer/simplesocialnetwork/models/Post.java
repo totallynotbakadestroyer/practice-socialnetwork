@@ -1,9 +1,6 @@
 package com.bakadestroyer.simplesocialnetwork.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -11,48 +8,33 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long authorId;
-    private Long destinationId;
-    private String authorName;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User author;
+    @ManyToOne
+    private User destinationUser;
     private Date date = new Date();
     private String postText;
     private String postImage;
     private String postAddition;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
-    }
-
-    public String getAuthorName() {
-        return authorName;
-    }
-
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
-
     public Date getDate() {
         return date;
     }
 
-    public Long getDestinationId() {
-        return destinationId;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setDestinationId(Long destinationId) {
-        this.destinationId = destinationId;
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public User getDestinationUser() {
+        return destinationUser;
+    }
+
+    public void setDestinationUser(User destinationUser) {
+        this.destinationUser = destinationUser;
     }
 
     public void setDate(Date date) {
