@@ -18,12 +18,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-
-public class JwtAuthentificationFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager authenticationManager;
 
-    public JwtAuthentificationFilter(AuthenticationManager authenticationManager) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
@@ -41,12 +40,11 @@ public class JwtAuthentificationFilter extends UsernamePasswordAuthenticationFil
                 credentials.getPassword(),
                 new ArrayList<>());
 
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        return authentication;
+        return authenticationManager.authenticate(authenticationToken);
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
         UserPrincipal principal = (UserPrincipal) authResult.getPrincipal();
 
         String token = JWT.create()
