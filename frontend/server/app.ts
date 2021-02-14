@@ -20,7 +20,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(logger('dev'));
 
-app.use(jwt({ algorithms: ['RS256'], secret: JWT_SECRET }).unless({ path: ['/api/auth/login'] }));
+app.use(
+  jwt({ algorithms: ['RS256'], secret: JWT_SECRET }).unless({
+    path: ['/api/auth/login', '/api/auth/signup'],
+  })
+);
 
 app.use('/api', AuthController);
 

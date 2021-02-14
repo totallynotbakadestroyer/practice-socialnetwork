@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { UserStatic } from '../../server/types';
 
 export default (sequelize: Sequelize): void => {
-  const user = <UserStatic>sequelize.define('User', {
+  const user = <UserStatic>sequelize.define('user', {
     email: {
       allowNull: false,
       type: DataTypes.STRING,

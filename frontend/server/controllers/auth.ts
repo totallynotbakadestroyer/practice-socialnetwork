@@ -1,7 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { UserCredentials } from '../types';
+import { UserCredentials, UserInfoAttributes } from '../types';
 import userService from '../services/userService';
 
 const auth = express.Router();
@@ -35,6 +35,16 @@ auth.post('/auth/login', async (req, res) => {
     if (err) return err;
     res.header('Authorization', `Bearer ${encoded}`).json(user);
   });
+});
+
+auth.post('/auth/signup', async (req, res) => {
+  const {
+    email,
+    password,
+    userInfo,
+  }: { email: string; password: string; userInfo: UserInfoAttributes } = req.body;
+  await userService.createUser({ email, password }, userInfo);
+  res.status(201).end();
 });
 
 export default auth;

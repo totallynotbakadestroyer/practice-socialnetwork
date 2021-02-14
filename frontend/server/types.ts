@@ -19,8 +19,24 @@ export interface UserAttributes {
 
 export interface UserModel extends Model<UserAttributes>, UserAttributes {}
 
-export class User extends Model<UserModel, UserAttributes> {}
-
 export type UserStatic = typeof Model & {
   new (values?: Record<string, unknown>, options?: BuildOptions): UserModel;
 };
+
+export enum Gender {
+  Male,
+  Female,
+}
+
+export interface UserInfoAttributes {
+  firstName: string;
+  lastName: string;
+  country?: string;
+  workPlace?: string;
+  dateOfBirth: Date;
+  relationship?: string;
+  website?: string;
+  instagram?: string;
+  gender?: Gender;
+  avatar?: string;
+}
