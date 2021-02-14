@@ -1,4 +1,8 @@
 import { Sequelize } from 'sequelize';
+import setAssociations from './setAssociations';
+import user from './models/user.model';
+import userInfo from './models/userInfo.model';
+import post from './models/post.model';
 
 let postgresUri;
 
@@ -18,5 +22,18 @@ const sequelize = new Sequelize(postgresUri, {
     },
   },
 });
+
+const setUpDb = () => {
+  user(sequelize);
+  userInfo(sequelize); // TODO: really ugly solution need to find something better until its not too late
+  post(sequelize);
+  setAssociations(sequelize);
+};
+
+(async () => {
+  await sequelize.sync({ force: false });
+})();
+
+setUpDb();
 
 export default sequelize;
