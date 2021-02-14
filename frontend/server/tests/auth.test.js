@@ -3,19 +3,17 @@ import jwt from 'jsonwebtoken';
 import app from '../app';
 import sequelize from '../../sequelize';
 import helper from './test_helper';
+import userService from '../services/userService';
 
-console.log(sequelize.models);
-
-const { User } = sequelize.models;
+const { user } = sequelize.models;
 
 const api = supertest(app);
 
 beforeEach(async () => {
-  await User.destroy({ truncate: true, cascade: true });
+  await user.destroy({ truncate: true, cascade: true });
 
-  const userObjects = helper.initialUsers.map((user) => User.build(user));
-  const promiseArray = userObjects.map((user) => user.save());
-  await Promise.all(promiseArray);
+  const userObjects = helper.initialUsers.map((userObject) => user.create(userObject));
+  await Promise.all(userObjects);
 });
 afterAll(async () => {
   await sequelize.close();
@@ -57,5 +55,17 @@ describe('logging in', () => {
       .post(baseUrl)
       .send({ email: helper.initialUsers[0].email, password: 'wrongpassword' });
     expect(result.header).not.toHaveProperty('authorization');
+  });
+});
+
+describe('signing up', () => {
+  const baseUrl = '/api/auth/signup';
+  test('should return 201 on successful user creation', async () => {
+    await api.post(baseUrl).send(helper.userToCreate).expect(201);
+  });
+  test('user should appear in db after creation', async () => {
+    await api.post(baseUrl).send(helper.userToCreate);
+    const newUser = await userService.findUser({ email: helper.userToCreate.email });
+    expect(newUser).not.toBeNull();
   });
 });
