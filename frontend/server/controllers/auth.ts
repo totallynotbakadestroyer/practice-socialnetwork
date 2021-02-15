@@ -45,8 +45,8 @@ auth.post('/auth/login', async (req, res) => {
 
 auth.post('/auth/signup', async (req, res) => {
   const { email, password, ...userInfo }: NewUser = req.body;
-  await userService.createUser({ email, password }, userInfo);
-  res.status(201).end();
+  const user = await userService.createUser({ email, password }, userInfo);
+  res.status(201).json(user);
 });
 
 export default auth;
