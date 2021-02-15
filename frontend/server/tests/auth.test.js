@@ -44,6 +44,10 @@ describe('logging in', () => {
       .send({ email: helper.initialUsers[0].email, password: 'wrongpassword' })
       .expect(400);
   });
+  test('password should not appear in response', async () => {
+    const result = await api.post(baseUrl).send(helper.initialUsers[0]);
+    expect(result).not.toHaveProperty('password');
+  });
   test('should return 400 if user not found', async () => {
     await api.post(baseUrl).send({ email: 'someemail', password: 'wrongpassword' }).expect(400);
   });
@@ -67,5 +71,9 @@ describe('signing up', () => {
     await api.post(baseUrl).send(helper.userToCreate);
     const newUser = await userService.findUser({ email: helper.userToCreate.email });
     expect(newUser).not.toBeNull();
+  });
+  test('response should not contain sensitive data', async () => {
+    const result = await api.post(baseUrl).send(helper.userToCreate);
+    expect(result).not.toHaveProperty('password');
   });
 });
