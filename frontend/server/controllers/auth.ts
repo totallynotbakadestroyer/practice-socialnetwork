@@ -1,7 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { UserCredentials, UserInfoAttributes } from '../types';
+import { UserCredentials } from '../types';
 import userService from '../services/userService';
 
 const auth = express.Router();
@@ -13,6 +13,12 @@ if (process.env.JWT_SECRET) {
 } else {
   console.error('JWT_SECRET environmental variable is not set');
   process.exit(1);
+}
+
+interface NewUser extends UserCredentials {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: Date;
 }
 
 auth.post('/auth/login', async (req, res) => {
@@ -38,11 +44,7 @@ auth.post('/auth/login', async (req, res) => {
 });
 
 auth.post('/auth/signup', async (req, res) => {
-  const {
-    email,
-    password,
-    userInfo,
-  }: { email: string; password: string; userInfo: UserInfoAttributes } = req.body;
+  const { email, password, ...userInfo }: NewUser = req.body;
   await userService.createUser({ email, password }, userInfo);
   res.status(201).end();
 });

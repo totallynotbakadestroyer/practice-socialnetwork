@@ -22,11 +22,9 @@ const initialUsers = [
 const userToCreate = {
   email: 'createduser@test.com',
   password: 'createdpassword',
-  userInfo: {
-    firstName: 'createduser',
-    lastName: 'createduser',
-    dateOfBirth: new Date().getTime(),
-  },
+  firstName: 'createduser',
+  lastName: 'createduser',
+  dateOfBirth: new Date().getTime(),
 };
 
 export default {
