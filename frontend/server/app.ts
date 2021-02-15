@@ -21,7 +21,7 @@ app.use(cors());
 app.use(logger('dev'));
 
 app.use(
-  jwt({ algorithms: ['RS256'], secret: JWT_SECRET }).unless({
+  jwt({ algorithms: ['HS256'], secret: JWT_SECRET }).unless({
     path: ['/api/auth/login', '/api/auth/signup'],
   })
 );
