@@ -39,7 +39,7 @@ auth.post('/auth/login', async (req, res) => {
   }
   jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, (err, encoded) => {
     if (err) return err;
-    res.header('Authorization', `Bearer ${encoded}`).json(user);
+    res.header('Authorization', `Bearer ${encoded}`).json(user.userInfo);
   });
 });
 
