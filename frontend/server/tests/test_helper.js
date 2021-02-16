@@ -1,3 +1,6 @@
+import jwt from 'jsonwebtoken';
+import sequelize from '../../sequelize';
+
 const initialUsers = [
   {
     email: 'testemail@test.com',
@@ -27,7 +30,16 @@ const userToCreate = {
   dateOfBirth: new Date().getTime(),
 };
 
+const generateTestJwt = async () => {
+  const { user, userInfo } = sequelize.models;
+  const createdUser = await user.create(initialUsers[0], { include: userInfo });
+  const userData = createdUser.toJSON();
+  const token = `Bearer ${jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET)}`;
+  return { userData, jwt: token };
+};
+
 export default {
   initialUsers,
   userToCreate,
+  generateTestJwt,
 };
