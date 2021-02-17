@@ -4,7 +4,7 @@ import { UserInfoAttributes } from '../types';
 const userInfoModel = sequelize.models.userInfo;
 
 const findUserInfo = async (userId: string) => {
-  const userInfo = await userInfoModel.findOne({ where: { userId } });
+  const userInfo = await userInfoModel.findOne({ where: { id: userId } });
   if (!userInfo) {
     return null;
   }
@@ -12,7 +12,7 @@ const findUserInfo = async (userId: string) => {
 };
 
 const updateUserInfo = async (userId: string, updateFields: Partial<UserInfoAttributes>) => {
-  const user = await userInfoModel.findOne({ where: { userId } });
+  const user = await userInfoModel.findOne({ where: { id: userId } });
   if (!user) {
     return null;
   }
