@@ -5,6 +5,7 @@ import cors from 'cors';
 import jwt from 'express-jwt';
 import AuthController from './controllers/auth';
 import UserController from './controllers/user';
+import PostController from './controllers/post';
 
 let JWT_SECRET;
 
@@ -29,6 +30,7 @@ app.use(
 
 app.use('/api', AuthController);
 app.use('/api', UserController);
+app.use('/api', PostController);
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.use('*', express.static(path.join(__dirname, '/public')));
