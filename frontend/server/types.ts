@@ -6,7 +6,7 @@ export interface UserCredentials {
 }
 
 export interface UserAttributes {
-  id?: string;
+  id?: number;
   email: string;
   password: string;
   role: string;
@@ -29,9 +29,11 @@ export enum Gender {
 }
 
 export interface UserInfoAttributes {
+  id?: number;
   firstName: string;
   lastName: string;
   country?: string;
+  city?: string;
   workPlace?: string;
   dateOfBirth: Date;
   relationship?: string;
@@ -39,4 +41,25 @@ export interface UserInfoAttributes {
   instagram?: string;
   gender?: Gender;
   avatar?: string;
+  userId?: number;
+}
+
+declare global {
+  interface ParsedToken {
+    iss: string;
+    sub: string;
+    aud: string | string[];
+    iat: number;
+    exp: number;
+    azp: string;
+    scope: string;
+    id: number;
+    role: string;
+  }
+
+  namespace Express {
+    interface Request {
+      user: ParsedToken;
+    }
+  }
 }

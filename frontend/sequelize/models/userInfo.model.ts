@@ -13,6 +13,9 @@ export default (sequelize: Sequelize): void => {
     country: {
       type: DataTypes.STRING,
     },
+    city: {
+      type: DataTypes.STRING,
+    },
     workPlace: {
       type: DataTypes.STRING,
     },
