@@ -1,4 +1,5 @@
 import sequelize from '../../sequelize';
+import { PostModel } from '../types';
 
 const postModel = sequelize.models.post;
 
@@ -17,7 +18,26 @@ const findSinglePost = async (postId: string) => {
   return post.toJSON();
 };
 
+const createPost = async (post) => {
+  const newPost = await postModel.create(post);
+  return newPost.toJSON();
+};
+
+const updatePost = async (userId: string, postId, updateFields) => {
+  const postToUpdate: PostModel | null = await postModel.findOne({ where: { id: postId } });
+  if (!postToUpdate) {
+    return null;
+  }
+  if (String(postToUpdate.authorId) !== userId) {
+    throw Error;
+  }
+  await postToUpdate.update(updateFields);
+  return postToUpdate.toJSON();
+};
+
 export default {
   findUserPosts,
   findSinglePost,
+  createPost,
+  updatePost,
 };

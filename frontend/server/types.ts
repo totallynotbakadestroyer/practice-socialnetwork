@@ -23,6 +23,22 @@ export type UserStatic = typeof Model & {
   new (values?: Record<string, unknown>, options?: BuildOptions): UserModel;
 };
 
+export interface PostAttributes {
+  id?: number;
+  text?: string;
+  images?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
+  authorId?: number;
+  destinationUserId?: number;
+}
+
+export interface PostModel extends Model<PostAttributes>, PostAttributes {}
+
+export type PostStatic = typeof Model & {
+  new (values?: Record<string, unknown>, options?: BuildOptions): PostModel;
+};
+
 export enum Gender {
   Male,
   Female,

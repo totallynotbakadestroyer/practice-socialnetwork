@@ -1,7 +1,8 @@
 import { DataTypes, Sequelize } from 'sequelize';
+import { PostStatic } from '../../server/types';
 
 export default (sequelize: Sequelize): void => {
-  sequelize.define('post', {
+  <PostStatic>sequelize.define('post', {
     text: {
       type: DataTypes.STRING,
     },
