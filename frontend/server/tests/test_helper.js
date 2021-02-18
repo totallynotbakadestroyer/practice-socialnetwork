@@ -10,7 +10,7 @@ const initialUsers = [
       firstName: 'cooltest',
       lastName: 'cooluser',
       dateOfBirth: new Date().getTime(),
-      posts: [
+      profilePosts: [
         { id: 4234242, text: 'testtest1' },
         { text: 'testtest2' },
         { text: 'testtest3' },
@@ -47,7 +47,7 @@ const userToCreate = {
 const generateTestJwt = async () => {
   const { user, userInfo, post } = sequelize.models;
   const createdUser = await user.create(initialUsers[0], {
-    include: [{ model: userInfo, include: [post] }],
+    include: [{ model: userInfo, include: [{ model: post, as: 'profilePosts' }] }],
   });
   const userData = createdUser.toJSON();
   const token = `Bearer ${jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET)}`;

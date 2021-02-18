@@ -38,7 +38,7 @@ describe('getting posts', () => {
     expect(result.body).toHaveLength(5);
   });
   test('should return only posts after provided offset', async () => {
-    const excludedPosts = userData.userInfo.posts
+    const excludedPosts = userData.userInfo.profilePosts
       .filter((x, index) => index <= 5)
       .map((x) => x.name);
     const query = { userId: userData.id, offset: 5 };
@@ -63,7 +63,7 @@ describe('getting single post', () => {
   });
   test('should return that post if right id', async () => {
     const result = await api.get(`${baseUrl}/${id}`).set('Authorization', jwt);
-    expect(result.body.text).toEqual(userData.userInfo.posts[0].text);
+    expect(result.body.text).toEqual(userData.userInfo.profilePosts[0].text);
   });
   test('should return 404 if wrong id', async () => {
     await api.get(`${baseUrl}/5353`).set('Authorization', jwt).expect(404);
