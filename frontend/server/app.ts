@@ -22,6 +22,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(logger('dev'));
 
+app.use(express.static(path.join(__dirname, '/public')));
+app.use('*', express.static(path.join(__dirname, '/public')));
+
 app.use(
   jwt({ algorithms: ['HS256'], secret: JWT_SECRET }).unless({
     path: ['/api/auth/login', '/api/auth/signup'],
@@ -31,8 +34,5 @@ app.use(
 app.use('/api', AuthController);
 app.use('/api', UserController);
 app.use('/api', PostController);
-
-app.use(express.static(path.join(__dirname, '/public')));
-app.use('*', express.static(path.join(__dirname, '/public')));
 
 export default app;
