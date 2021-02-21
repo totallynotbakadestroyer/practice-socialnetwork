@@ -3,15 +3,12 @@ import app from '../app';
 import sequelize from '../../sequelize';
 import helper from './test_helper';
 
-const { user } = sequelize.models;
-
 const api = supertest(app);
 
 let jwt;
 let userData;
 
 beforeEach(async () => {
-  await user.destroy({ truncate: true, cascade: true });
   const newUser = await helper.generateTestJwt();
   jwt = newUser.jwt;
   userData = newUser.userData;
