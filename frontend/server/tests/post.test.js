@@ -76,3 +76,44 @@ describe('getting single post', () => {
     await api.get(`${baseUrl}/${id}`).expect(401);
   });
 });
+
+describe('creating posts', () => {
+  const baseUrl = '/api/posts';
+  const payload = { post: { text: 'createdpost' }, to: 69348503 };
+  test('should return 200 on successful creation', async () => {
+    await api.post(baseUrl).set('Authorization', jwt).send(payload).expect(200);
+  });
+  test('should return that post on successful creation', async () => {
+    const result = await api.post(baseUrl).set('Authorization', jwt).send(payload);
+    expect(result.body.text).toEqual(payload.post.text);
+  });
+  test('should return 401 if no auth', async () => {
+    await api.post(baseUrl).send(payload.post.text).expect(401);
+  });
+  test('should return 400 if empty new post', async () => {
+    await api.post(baseUrl).set('Authorization', jwt).expect(400);
+  });
+  test('should return nothing on error', async () => {
+    const result = await api.post(baseUrl).set('Authorization', jwt).send(payload);
+    expect(result.body).toMatchObject({});
+  });
+});
+
+describe('updating posts', () => {
+  const baseUrl = `/api/posts/4234242`;
+  const payload = { post: { text: 'updatedPost' } };
+  test('should return 200 on successful update', async () => {
+    await api.put(baseUrl).set('Authorization', jwt).send(payload).expect(200);
+  });
+  test('should return that post on successful update', async () => {
+    const result = await api.put(baseUrl).set('Authorization', jwt).send(payload);
+    expect(result.body.text).toEqual(payload.post.text);
+  });
+  test('should return 401 if no auth', async () => {
+    await api.put(baseUrl).send(payload.post.text).expect(401);
+  });
+  test('should return nothing on error', async () => {
+    const result = await api.put(baseUrl).set('Authorization', jwt).send(payload);
+    expect(result.body).toMatchObject({});
+  });
+});
