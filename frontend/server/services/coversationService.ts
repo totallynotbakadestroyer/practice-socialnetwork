@@ -17,6 +17,13 @@ const findMessages = async (userId, conversationId) => {
     where: { id: conversationId },
     include: [
       {
+        model: conversationParticipantModel,
+        attributes: ['conversationId'],
+        where: {
+          userId,
+        },
+      },
+      {
         model: messageModel,
         as: 'messages',
         attributes: ['createdAt', 'text', 'id', 'userId'],
@@ -29,6 +36,8 @@ const findMessages = async (userId, conversationId) => {
   }
   return messages.toJSON();
 };
+
+const createMessage = async (userId, conversationId) => {};
 
 export default {
   findUserConversations,
