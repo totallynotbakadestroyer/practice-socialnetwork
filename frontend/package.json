@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "dev": "concurrently \"yarn run serve:client\" \"yarn run serve:server\"",
     "serve:client": "vue-cli-service serve",
-    "serve:server": "ts-node-dev --require dotenv/config ./server/index.ts"
+    "serve:server": "ts-node-dev --require dotenv/config ./server/index.ts",
+    "test": "jest --setupFiles dotenv/config --runInBand"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
