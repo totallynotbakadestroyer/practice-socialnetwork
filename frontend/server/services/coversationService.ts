@@ -1,4 +1,5 @@
 import sequelize from '../../sequelize';
+import { isUserParticipant } from '../helpers';
 
 const conversationModel = sequelize.models.conversation;
 const messageModel = sequelize.models.message;
@@ -6,10 +7,22 @@ const conversationParticipantModel = sequelize.models.conversationParticipant;
 const userInfoModel = sequelize.models.userInfo;
 
 const findUserConversations = async (userId) => {
-  const conversations = await conversationModel.findAll({
-    include: [{ model: conversationParticipantModel, where: { userId } }],
+  const user = await userInfoModel.findOne({
+    where: { id: userId },
+    include: [
+      {
+        model: conversationModel,
+        through: { attributes: [] },
+        include: [
+          { model: conversationParticipantModel, as: 'participants', include: [userInfoModel] },
+        ],
+      },
+    ],
   });
-  return conversations;
+  if (!user) {
+    return;
+  }
+  return user.get('conversations');
 };
 
 const findMessages = async (userId, conversationId) => {
@@ -27,7 +40,7 @@ const findMessages = async (userId, conversationId) => {
         model: messageModel,
         as: 'messages',
         attributes: ['createdAt', 'text', 'id', 'userId'],
-        include: [{ model: userInfoModel, attributes: ['avatar', 'firstName', 'lastName'] }],
+        include: [{ model: userInfoModel }],
       },
     ],
   });
@@ -37,9 +50,18 @@ const findMessages = async (userId, conversationId) => {
   return messages.toJSON();
 };
 
-const createMessage = async (userId, conversationId) => {};
+const sendMessageToConvo = async (userId, conversationId, message) => {
+  const conversation: any = await isUserParticipant(conversationId, userId);
+  if (!conversation) {
+    return null;
+  }
+  const newMessage = await messageModel.create({ ...message, userId, conversationId });
+
+  return newMessage;
+};
 
 export default {
   findUserConversations,
   findMessages,
+  sendMessageToConvo,
 };

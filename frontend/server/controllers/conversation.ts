@@ -16,4 +16,12 @@ conversation.get('/conversations/:id', async (req, res) => {
   res.json(messages);
 });
 
+conversation.post('/conversations/:id', async (req, res) => {
+  const { id } = req.user;
+  const { id: convId } = req.params;
+  const message = req.body;
+  const createdMessage = await conversationService.sendMessageToConvo(id, convId, message);
+  res.json(createdMessage);
+});
+
 export default conversation;
