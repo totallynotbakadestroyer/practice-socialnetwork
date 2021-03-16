@@ -26,16 +26,9 @@ const findUserConversations = async (userId) => {
 };
 
 const findMessages = async (userId, conversationId) => {
-  const messages = await conversationModel.findOne({
+  const conversation = await conversationModel.findOne({
     where: { id: conversationId },
     include: [
-      {
-        model: conversationParticipantModel,
-        attributes: ['conversationId'],
-        where: {
-          userId,
-        },
-      },
       {
         model: messageModel,
         as: 'messages',
@@ -44,10 +37,10 @@ const findMessages = async (userId, conversationId) => {
       },
     ],
   });
-  if (!messages) {
+  if (!conversation) {
     return null;
   }
-  return messages.toJSON();
+  return conversation.get('messages');
 };
 
 const sendMessageToConvo = async (userId, conversationId, message) => {
@@ -55,9 +48,7 @@ const sendMessageToConvo = async (userId, conversationId, message) => {
   if (!conversation) {
     return null;
   }
-  const newMessage = await messageModel.create({ ...message, userId, conversationId });
-
-  return newMessage;
+  return messageModel.create({ ...message, userId, conversationId });
 };
 
 export default {

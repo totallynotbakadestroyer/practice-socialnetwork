@@ -1,15 +1,14 @@
 <template>
-  <v-list-item @click="$forceUpdate()"
-    exact :to="{ query: { recId: interlocutor.id } }" class="py-2 align-self-center">
+  <v-list-item exact class="py-2 align-self-center" :value="conversation">
     <div class="d-flex message">
       <span class="message_avatar align-self-center">
         <v-avatar size="60">
-          <img :src="interlocutor.avatar">
+          <img :src="interlocutor.avatar" />
         </v-avatar>
       </span>
       <div class="message_body d-flex flex-column ml-3 align-self-center">
         <div class="message_body_name d-flex justify-space-between">
-          <span>{{ interlocutor.firstName }} {{interlocutor.lastName}}</span>
+          <span>{{ interlocutor.firstName }} {{ interlocutor.lastName }}</span>
           <span>{{ interlocutor.time }}</span>
         </div>
         <div>
@@ -22,13 +21,12 @@
 
 <script>
 export default {
-  props: ['interlocutor'],
+  props: ['interlocutor', 'conversation'],
   name: 'LastMessage',
 };
 </script>
 
 <style scoped>
-
 .message {
   width: 100%;
   height: 100%;
@@ -37,5 +35,4 @@ export default {
 .message_body {
   width: 100%;
 }
-
 </style>

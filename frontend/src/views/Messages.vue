@@ -3,68 +3,49 @@
     <v-row class="fill-height">
       <v-col cols="9">
         <v-card outlined class="pa-2 fill-height d-flex justify-center align-center">
-          <h1 v-if="!$route.query.recId">
-            Select contact you want to start chat with
-          </h1>
-          <messenger :key="$route.fullPath" class="overflow-y-auto"
-                     :rec-id="$route.query.id" v-else/>
+          <h1 v-if="!currentConversation">Select contact you want to start chat with</h1>
+          <messenger class="overflow-y-auto" :conversation="currentConversation" v-else />
         </v-card>
       </v-col>
-      <v-col cols="3">
-        <v-card outlined class="mx-auto">
-          <v-list>
-            <v-card-title>
-              Contacts:
-            </v-card-title>
-            <v-list-item-group v-model="model" color="indigo">
-              <last-message v-for="(conversation, id) in conversations" :key="id"
-                            :interlocutor="getInterlocutor(conversation)"/>
-            </v-list-item-group>
-          </v-list>
-        </v-card>
+      <v-col cols="3"
+        ><contacts-box
+          :conversations="conversations"
+          @conversation-change="handleConversationChange"
+        />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import LastMessage from '@/components/messages/LastMessage.vue';
 import Messenger from '@/components/messages/Messenger.vue';
-import axios from 'axios';
+import conversationService from '@/services/conversation';
+import ContactsBox from '@/components/messages/ContactsBox.vue';
 
 export default {
   name: 'Messages',
-  components: { Messenger, LastMessage },
+  components: { ContactsBox, Messenger },
   data() {
     return {
-      model: '',
       conversations: [],
+      currentConversation: null,
     };
   },
-  methods: {
-    getInterlocutor(conversation) {
-      return (conversation.userOne.id === this.$store.getters.getUserId)
-        ? conversation.userTwo : conversation.userOne;
-    },
+  async mounted() {
+    const conversations = await conversationService.getUserConversations();
+    console.log(conversations);
+    this.conversations = [...conversations];
   },
-  mounted() {
-    axios({
-      method: 'get',
-      url: '/api/conversations',
-    }).then((response) => {
-      console.log(response.data.content);
-      this.conversations.push(...response.data.content);
-    }).catch((error) => {
-      console.log(error);
-    });
+  methods: {
+    handleConversationChange(model) {
+      this.currentConversation = model;
+    },
   },
 };
 </script>
 
 <style scoped>
-
 body::-webkit-scrollbar {
   display: none;
 }
-
 </style>
