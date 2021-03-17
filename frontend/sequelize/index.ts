@@ -3,6 +3,9 @@ import setAssociations from './setAssociations';
 import user from './models/user.model';
 import userInfo from './models/userInfo.model';
 import post from './models/post.model';
+import conversation from './models/conversation.model';
+import message from './models/message.model';
+import conversationParticipant from './models/conversationParticipants.model';
 
 let postgresUri;
 
@@ -27,6 +30,9 @@ const setUpDb = () => {
   user(sequelize);
   userInfo(sequelize); // TODO: really ugly solution need to find something better until its not too late
   post(sequelize);
+  message(sequelize);
+  conversation(sequelize);
+  conversationParticipant(sequelize);
   setAssociations(sequelize);
 };
 

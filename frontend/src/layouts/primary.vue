@@ -37,6 +37,10 @@
 
 <script>
 export default {
+  beforeCreate() {
+    this.$socket.connect();
+    this.$socket.emit('registerSocket', this.$store.state.id);
+  },
   name: 'primary',
   data() {
     return {

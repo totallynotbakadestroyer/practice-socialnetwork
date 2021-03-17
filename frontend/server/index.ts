@@ -1,6 +1,7 @@
 import http from 'http';
 import app from './app';
 import sequelize from '../sequelize';
+import socketApi from './socket';
 
 const PORT = process.env.PORT || 8889;
 
@@ -15,6 +16,12 @@ const connectToDb = async () => {
     process.exit(1);
   }
 };
+
+socketApi.io.attach(server, {
+  cors: {
+    origin: '*',
+  },
+});
 
 const init = async () => {
   await connectToDb();

@@ -30,20 +30,22 @@ export default {
       page: 0,
     };
   },
+  sockets: {
+    newMessage(message) {
+      console.log(message);
+      this.messages.push(message);
+    },
+  },
   methods: {
     async send() {
       const message = { text: this.message };
-      const newMessage = await conversationService.sendMessageToConvo(
-        this.conversation.id,
-        message
-      );
+      await conversationService.sendMessageToConvo(this.conversation.id, message);
       this.message = '';
-      console.log(newMessage);
-      this.messages.push(newMessage);
     },
   },
   async beforeMount() {
     this.messages = await conversationService.getMessagesByConversationId(this.conversation.id);
+    this.$socket.emit('joinConversationRoom', this.conversation.id);
   },
 };
 </script>

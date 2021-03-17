@@ -21,7 +21,8 @@ conversation.post('/conversations/:id', async (req, res) => {
   const { id: convId } = req.params;
   const message = req.body;
   const createdMessage = await conversationService.sendMessageToConvo(id, convId, message);
-  res.json(createdMessage);
+  req.io.to(`conversation-${convId}`).emit('newMessage', createdMessage);
+  res.end();
 });
 
 export default conversation;

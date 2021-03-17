@@ -1,4 +1,5 @@
 import { BuildOptions, Model } from 'sequelize';
+import SocketIO from 'socket.io';
 
 export interface UserCredentials {
   email: string;
@@ -76,6 +77,7 @@ declare global {
   namespace Express {
     interface Request {
       user: ParsedToken;
+      io: SocketIO.Server;
     }
   }
 }

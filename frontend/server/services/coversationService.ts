@@ -48,7 +48,11 @@ const sendMessageToConvo = async (userId, conversationId, message) => {
   if (!conversation) {
     return null;
   }
-  return messageModel.create({ ...message, userId, conversationId });
+  const newMessage: any = await messageModel.create({ ...message, userId, conversationId });
+  return messageModel.findOne({
+    where: { id: newMessage.id },
+    include: [userInfoModel],
+  });
 };
 
 export default {

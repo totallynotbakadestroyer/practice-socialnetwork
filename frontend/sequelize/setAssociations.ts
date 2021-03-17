@@ -6,19 +6,23 @@ const setAssociations = (sequelize: Sequelize): void => {
   userInfo.belongsTo(user, { foreignKey: 'id' });
   userInfo.hasMany(post, { as: 'createdPosts', foreignKey: 'authorId' });
   userInfo.hasMany(post, { as: 'profilePosts', foreignKey: 'destinationUserId' });
-  post.belongsTo(userInfo, { as: 'author', foreignKey: 'authorId' });
-  post.belongsTo(userInfo, { as: 'destinationUser', foreignKey: 'destinationUserId' });
   userInfo.belongsToMany(conversation, {
     through: 'conversationParticipant',
     foreignKey: 'userId',
   });
-  conversation.belongsToMany(userInfo, { through: 'conversationParticipant' });
-  conversation.hasMany(message, { as: 'messages' });
-  conversation.hasMany(conversationParticipant, { foreignKey: 'conversationId' });
-  message.belongsTo(conversation);
-  message.belongsTo(userInfo, { foreignKey: 'userId' });
   userInfo.hasMany(message, { as: 'sentMessages', foreignKey: 'userId' });
   userInfo.hasMany(conversationParticipant, { foreignKey: 'userId' });
+  post.belongsTo(userInfo, { as: 'author', foreignKey: 'authorId' });
+  post.belongsTo(userInfo, { as: 'destinationUser', foreignKey: 'destinationUserId' });
+  conversation.belongsToMany(userInfo, {
+    through: 'conversationParticipant',
+    foreignKey: 'conversationId',
+  });
+  conversationParticipant.belongsTo(userInfo, { foreignKey: 'userId' });
+  conversation.hasMany(conversationParticipant, { as: 'participants' });
+  conversation.hasMany(message, { as: 'messages' });
+  message.belongsTo(conversation, { constraints: false });
+  message.belongsTo(userInfo, { foreignKey: 'userId' });
 };
 
 export default setAssociations;
