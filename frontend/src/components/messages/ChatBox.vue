@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <div class="d-flex flex-column messages__container">
     <v-row
       v-for="msg in messages"
       :key="msg.id"
@@ -42,7 +42,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </span>
+  </div>
 </template>
 
 <script>
@@ -64,4 +64,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.messages__container {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: calc(100% - 85px);
+}
+</style>

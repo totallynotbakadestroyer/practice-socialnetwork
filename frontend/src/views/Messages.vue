@@ -1,20 +1,29 @@
 <template>
-  <v-container class="fill-height" fluid>
-    <v-row class="fill-height">
-      <v-col cols="9">
-        <v-card outlined class="pa-2 fill-height d-flex justify-center align-center">
-          <h1 v-if="!currentConversation">Select contact you want to start chat with</h1>
-          <messenger class="overflow-y-auto" :conversation="currentConversation" v-else />
-        </v-card>
-      </v-col>
-      <v-col cols="3"
-        ><contacts-box
-          :conversations="conversations"
-          @conversation-change="handleConversationChange"
-        />
-      </v-col>
-    </v-row>
-  </v-container>
+  <div class="d-flex flex-column fill-height">
+    <v-container class="flex-grow-1 d-flex" fluid>
+      <v-row class="flex-grow-1">
+        <v-col class="d-flex" cols="9">
+          <v-card
+            outlined
+            class="message__container pa-2 flex-grow-1 d-flex justify-center align-center"
+          >
+            <h1 v-if="!currentConversation">Select contact you want to start chat with</h1>
+            <messenger
+              class="overflow-y-auto flex-grow-1 d-flex"
+              :conversation="currentConversation"
+              v-else
+            />
+          </v-card>
+        </v-col>
+        <v-col cols="3"
+          ><contacts-box
+            :conversations="conversations"
+            @conversation-change="handleConversationChange"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -45,7 +54,11 @@ export default {
 </script>
 
 <style scoped>
-body::-webkit-scrollbar {
-  display: none;
+main {
+  display: flex;
+}
+
+.message__container {
+  height: 97vh;
 }
 </style>

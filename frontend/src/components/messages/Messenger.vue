@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="fill-height">
+    <div class="flex-grow-1">
       <chat-box :messages="messages" />
     </div>
     <v-footer absolute>
@@ -54,5 +54,8 @@ export default {
 .wrapper {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 </style>
