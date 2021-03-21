@@ -43,16 +43,17 @@ const findMessages = async (userId, conversationId) => {
   return conversation.get('messages');
 };
 
-const sendMessageToConvo = async (userId, conversationId, message) => {
+const sendMessageToConvo = async (userId, conversationId, message): Promise<null | any> => {
   const conversation: any = await isUserParticipant(conversationId, userId);
   if (!conversation) {
     return null;
   }
   const newMessage: any = await messageModel.create({ ...message, userId, conversationId });
-  return messageModel.findOne({
+  const createdMessage = await messageModel.findOne({
     where: { id: newMessage.id },
     include: [userInfoModel],
   });
+  return { createdMessage, conversation };
 };
 
 export default {

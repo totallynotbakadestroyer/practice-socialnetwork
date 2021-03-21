@@ -1,5 +1,6 @@
 import express from 'express';
 import conversationService from '../services/coversationService';
+import { sendNotificationToConversationParticipants } from '../helpers';
 
 const conversation = express.Router();
 
@@ -20,8 +21,12 @@ conversation.post('/conversations/:id', async (req, res) => {
   const { id } = req.user;
   const { id: convId } = req.params;
   const message = req.body;
-  const createdMessage = await conversationService.sendMessageToConvo(id, convId, message);
+  const {
+    createdMessage,
+    conversation: currentConversation,
+  } = await conversationService.sendMessageToConvo(id, convId, message);
   req.io.to(`conversation-${convId}`).emit('newMessage', createdMessage);
+  await sendNotificationToConversationParticipants(currentConversation, createdMessage.text, id);
   res.end();
 });
 
