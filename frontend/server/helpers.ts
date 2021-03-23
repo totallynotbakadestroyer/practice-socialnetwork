@@ -24,6 +24,9 @@ export const isUserParticipant = async (conversationId, userId) => {
   return conversation;
 };
 
+export const generateId = () =>
+  Date.now().toString(36) + Math.random().toString(36).substr(2, 5).toUpperCase();
+
 const generateNotification = (type, currentUserId, conversation, message) => {
   switch (type) {
     case 'MESSAGE_NOTIFICATION':
@@ -31,7 +34,7 @@ const generateNotification = (type, currentUserId, conversation, message) => {
         const user = conversation.participants.find(
           (participant) => participant.userId !== currentUserId
         );
-        return { type, trigger: user.userInfo.firstName, content: { data: message } };
+        return { type, id: generateId(), trigger: user.userInfo, content: { data: message } };
       }
       return null;
     default:

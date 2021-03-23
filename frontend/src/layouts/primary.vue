@@ -32,11 +32,29 @@
         <router-view></router-view>
       </div>
     </v-main>
+    <div class="notification__container">
+      <notification
+        v-for="notification in notifications"
+        :notification="notification"
+        :key="notification.id"
+      />
+    </div>
   </v-app>
 </template>
 
 <script>
+import { generateNotification } from '../helper';
+import Notification from '../components/Notification.vue';
+
 export default {
+  components: { Notification },
+  sockets: {
+    notification(notification) {
+      const newNotification = generateNotification(notification);
+      console.log(newNotification);
+      this.$store.dispatch('addNewNotification', newNotification);
+    },
+  },
   beforeCreate() {
     this.$socket.connect();
     this.$socket.emit('registerSocket', this.$store.state.id);
@@ -55,6 +73,11 @@ export default {
       right: null,
     };
   },
+  computed: {
+    notifications() {
+      return this.$store.getters.getNotifications;
+    },
+  },
 };
 </script>
 
@@ -62,5 +85,14 @@ export default {
 body,
 html {
   height: 100%;
+}
+
+.notification__container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  right: 10px;
+  bottom: 0;
+  width: 100vw;
 }
 </style>
