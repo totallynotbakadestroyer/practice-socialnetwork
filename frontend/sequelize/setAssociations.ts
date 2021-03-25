@@ -10,8 +10,21 @@ const setAssociations = (sequelize: Sequelize): void => {
     through: 'conversationParticipant',
     foreignKey: 'userId',
   });
+  userInfo.belongsToMany(userInfo, {
+    as: 'requestees',
+    through: 'friendRequests',
+    foreignKey: 'requesterId',
+    onDelete: 'CASCADE',
+  });
+  userInfo.belongsToMany(userInfo, {
+    as: 'requesters',
+    through: 'friendRequests',
+    foreignKey: 'requesteeId',
+    onDelete: 'CASCADE',
+  });
   userInfo.hasMany(message, { as: 'sentMessages', foreignKey: 'userId' });
   userInfo.hasMany(conversationParticipant, { foreignKey: 'userId' });
+  userInfo.belongsToMany(userInfo, { as: 'friends', foreignKey: 'userId', through: 'userFriends' });
   post.belongsTo(userInfo, { as: 'author', foreignKey: 'authorId' });
   post.belongsTo(userInfo, { as: 'destinationUser', foreignKey: 'destinationUserId' });
   conversation.belongsToMany(userInfo, {

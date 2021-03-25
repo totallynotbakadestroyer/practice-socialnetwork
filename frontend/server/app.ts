@@ -7,6 +7,7 @@ import AuthController from './controllers/auth';
 import UserController from './controllers/user';
 import PostController from './controllers/post';
 import ConversationController from './controllers/conversation';
+import FriendshipController from './controllers/friendship';
 
 let JWT_SECRET;
 
@@ -35,5 +36,6 @@ app.use('/api', AuthController);
 app.use('/api', UserController);
 app.use('/api', PostController);
 app.use('/api', ConversationController);
+app.use('/api', FriendshipController);
 
 export default app;
