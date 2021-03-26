@@ -2,7 +2,7 @@ import axios from 'axios';
 import store from '../store/index';
 import router from '../router';
 
-export default ({ requiresAuth = false } = {}) => {
+export default ({ requiresAuth = true } = {}) => {
   const axiosInstance = axios.create({
     baseURL: '/api',
   });
