@@ -45,6 +45,14 @@ const routes = [
     },
   },
   {
+    path: '/friends',
+    name: 'Friends',
+    component: () => import('@/views/Friends.vue'),
+    meta: {
+      layout: 'primary',
+    },
+  },
+  {
     path: '*',
     component: () => import('@/views/NotFound.vue'),
     meta: {

@@ -67,6 +67,7 @@ export default {
       items: [
         { title: 'My Account', icon: 'mdi-account', link: `/id${this.$store.state.id}` },
         { title: 'News Feed', icon: 'mdi-view-dashboard', link: '/feed' },
+        { title: 'Friends', icon: 'mdi-account-multiple', link: '/friends' },
         { title: 'Messages', icon: 'mdi-message', link: '/messages' },
         { title: 'Settings', icon: 'mdi-cog', link: '/settings' },
       ],
