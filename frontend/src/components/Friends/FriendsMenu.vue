@@ -46,7 +46,7 @@ export default {
       friends: [
         ['All friends', 'mdi-account-multiple', 'all'],
         ['Online friends', 'mdi-account-alert', 'online', true], // TODO: Implement showing online users
-        ['Find friends', 'mdi-account-search', 'find'],
+        ['Find friends', 'mdi-account-search', 'find', true],
       ],
       requests: [
         ['Outgoing', 'mdi-account-arrow-right', 'out_requests'],

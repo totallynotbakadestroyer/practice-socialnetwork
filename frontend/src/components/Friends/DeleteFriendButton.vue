@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="deleteDialog" max-width="390">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="error" v-bind="attrs" v-on="on"> Delete from friends</v-btn>
+      <v-btn class="my-2" color="error" v-bind="attrs" v-on="on"> Delete from friends</v-btn>
     </template>
     <v-card>
       <v-card-title class="headline"> Remove from friends </v-card-title>

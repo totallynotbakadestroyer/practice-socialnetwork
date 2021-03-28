@@ -24,13 +24,8 @@
       <a>some link</a>
     </div>
     <v-divider />
-    <div v-if="user.id !== $store.state.id" class="d-flex flex-column mt-4">
-      <v-dialog v-model="dialog" width="600px">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn class="mb-4" color="success" dark v-bind="attrs" v-on="on"> Send message </v-btn>
-        </template>
-        <send-message-profile :user="user" v-on:closeModal="dialog = false" />
-      </v-dialog>
+    <div v-if="user.id === $store.state.id" class="d-flex flex-column mt-4">
+      <send-message-profile-button class-name="mb-4" :user="user" />
       <v-btn>Add as friend</v-btn>
     </div>
     <div v-else class="d-flex flex-column mt-4">
@@ -52,15 +47,10 @@
 
 <script>
 import moment from 'moment';
-import SendMessageProfile from '@/components/SendMessageProfile.vue';
+import SendMessageProfileButton from '../SendMessageProfileButton.vue';
 
 export default {
-  data() {
-    return {
-      dialog: false,
-    };
-  },
-  components: { SendMessageProfile },
+  components: { SendMessageProfileButton },
   name: 'UserAbout',
   props: ['user'],
   filters: {

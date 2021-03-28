@@ -40,9 +40,18 @@ export default {
       const index = this.friends.findIndex((x) => x.id === id);
       this.friends.splice(index, 1);
     },
+    async getFriends(section) {
+      this.friends = null;
+      this.friends = await friendshipService.getFriends(section);
+    },
   },
   async beforeMount() {
     this.friends = await friendshipService.getFriends();
+  },
+  watch: {
+    '$route.query.section': async function (section) {
+      await this.getFriends(section);
+    },
   },
 };
 </script>
