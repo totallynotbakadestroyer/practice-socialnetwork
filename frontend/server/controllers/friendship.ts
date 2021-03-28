@@ -13,10 +13,10 @@ friendship.get('/friends', async (req, res) => {
   let result;
   switch (section) {
     case 'requests':
-      result = await friendshipService.getFriendRequestsSent(req.user.id);
+      result = await friendshipService.getFriendRequestsPending(req.user.id);
       break;
     case 'out_requests':
-      result = await friendshipService.getFriendRequestsPending(req.user.id);
+      result = await friendshipService.getFriendRequestsSent(req.user.id);
       break;
     default:
       result = await friendshipService.getUserFriends(req.user.id);
