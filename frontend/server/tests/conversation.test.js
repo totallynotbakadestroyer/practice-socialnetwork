@@ -43,7 +43,6 @@ describe('getting conversation info', () => {
   });
   test('should return conversation info on successful request', async () => {
     const result = await api.get(baseUrl).set('Authorization', jwt);
-    console.log(result.body);
     expect(result.body).toHaveProperty('messages');
   });
   test('should return 401 on request with no auth', async () => {

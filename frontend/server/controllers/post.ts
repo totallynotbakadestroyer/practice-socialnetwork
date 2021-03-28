@@ -28,7 +28,6 @@ post.get('/posts/:id', async (req, res) => {
 post.post('/posts', async (req, res) => {
   const { id: authorId } = req.user;
   const { post: newPost, to: destinationUserId } = req.body;
-  console.log(req.body);
   if (!req.body || !destinationUserId) {
     return res.status(400).end();
   }

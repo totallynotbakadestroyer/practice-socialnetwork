@@ -24,7 +24,6 @@ describe('getting user info', () => {
   });
   test('should return userInfo if logged in', async () => {
     const result = await api.get(`${baseUrl}${userData.id}`).set('Authorization', jwt);
-    console.log(result.body);
     expect(result.body.firstName).toBe(userData.userInfo.firstName);
     expect(result.body.lastName).toBe(userData.userInfo.lastName);
   });
@@ -65,7 +64,6 @@ describe('updating user info', () => {
   test('should actually update userinfo in the db', async () => {
     await api.put(`${baseUrl}${userData.id}`).set('Authorization', jwt).send(updateFields);
     const result = await userInfoService.findUserInfo(userData.id);
-    console.log(result);
     expect(result.firstName).toBe(updateFields.firstName);
     expect(result.lastName).toBe(updateFields.lastName);
   });

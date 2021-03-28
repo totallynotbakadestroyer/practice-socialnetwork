@@ -23,7 +23,6 @@ export default {
     async createPost(payload) {
       const { id } = this.$router.currentRoute.params;
       const createdPost = await postService.createPost(id, payload);
-      console.log(createdPost);
       this.posts.unshift(createdPost.data);
     },
   },
@@ -31,7 +30,6 @@ export default {
     const { id } = this.$router.currentRoute.params;
     const posts = await postService.getPosts(id);
     this.posts = posts.data;
-    console.log(posts.data);
   },
 };
 </script>

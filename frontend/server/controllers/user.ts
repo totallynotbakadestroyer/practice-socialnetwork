@@ -18,7 +18,6 @@ user.put('/users/:id', async (req, res) => {
     return res.status(403).end();
   }
   const result = await userInfoService.updateUserInfo(id, req.body);
-  console.log(result);
   if (!result) {
     return res.status(404).end();
   }

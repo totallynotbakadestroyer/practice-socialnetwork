@@ -104,7 +104,6 @@ export default {
   },
   methods: {
     emitCurrStateToParent() {
-      console.log(this.userInfo);
       this.$emit('emitCurrentState', this.userInfo);
     },
   },

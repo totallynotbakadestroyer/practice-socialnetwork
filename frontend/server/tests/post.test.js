@@ -31,7 +31,6 @@ describe('getting posts', () => {
   test('should return first 5 posts if set limit', async () => {
     const query = { userId: userData.id, limit: 5 };
     const result = await api.get(baseUrl).query(query).set('Authorization', jwt);
-    console.log(result.body);
     expect(result.body).toHaveLength(5);
   });
   test('should return only posts after provided offset', async () => {
