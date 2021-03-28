@@ -1,17 +1,13 @@
 <template>
   <v-app>
-    <router-view/>
-    <v-footer
-        absolute>
-      <h3 class="ml-auto">
-        {{ new Date().getFullYear() }} - <strong>Vuealize</strong>
-      </h3>
+    <router-view />
+    <v-footer absolute>
+      <h3 class="ml-auto">{{ new Date().getFullYear() }} - <strong>Vuealize</strong></h3>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-
 export default {
   name: 'EmptyLayout',
 };

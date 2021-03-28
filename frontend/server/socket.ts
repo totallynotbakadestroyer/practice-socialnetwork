@@ -7,7 +7,7 @@ const socketApi = {
   io,
 };
 
-io.on('connection', (socket) => {
+io.on('connection', (socket: any) => {
   console.log('connected');
   socket.on('joinConversationRoom', async (conversationId) => {
     socket.join(`conversation-${conversationId}`);

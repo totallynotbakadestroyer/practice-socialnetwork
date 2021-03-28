@@ -1,15 +1,10 @@
 <template>
   <v-card>
-    <v-card-title class="headline green accent-4">
-      Sign up
-    </v-card-title>
+    <v-card-title class="headline green accent-4"> Sign up </v-card-title>
 
-    <v-card-actions
-      class="pa-4">
+    <v-card-actions class="pa-4">
       <v-row>
-        <v-col
-          cols="12"
-          sm="6">
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="firstName"
             label="First name"
@@ -21,9 +16,7 @@
           >
           </v-text-field>
         </v-col>
-        <v-col
-          cols="12"
-          sm="6">
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="lastName"
             label="Last name"
@@ -31,13 +24,11 @@
             color="green"
             outlined
             @input="$v.lastName.$touch()"
-            @blur="$v.lastName.$touch()">
+            @blur="$v.lastName.$touch()"
+          >
           </v-text-field>
         </v-col>
-        <v-col
-          cols="12"
-          sm="12"
-        >
+        <v-col cols="12" sm="12">
           <v-text-field
             v-model="email"
             :error-messages="emailErrors"
@@ -50,9 +41,7 @@
           >
           </v-text-field>
         </v-col>
-        <v-col
-          cols="12"
-          sm="6">
+        <v-col cols="12" sm="6">
           <v-text-field
             label="Password"
             v-model="password"
@@ -65,12 +54,10 @@
           >
           </v-text-field>
         </v-col>
-        <v-col
-          cols="12"
-          sm="6">
+        <v-col cols="12" sm="6">
           <v-text-field
             label="Password confirm"
-            v-model='passwordConfirm'
+            v-model="passwordConfirm"
             type="password"
             :error-messages="passwordConfirmErrors"
             color="green"
@@ -112,21 +99,13 @@
 
     <v-card-actions class="pa-4">
       <v-spacer></v-spacer>
-      <v-btn
-        color="accent"
-        @click="submitForm()"
-      >
-        Sign up!
-      </v-btn>
+      <v-btn color="accent" @click="submitForm()"> Sign up! </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
-
-import {
-  required, email, minLength, sameAs,
-} from 'vuelidate/lib/validators';
+import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
 import axios from 'axios';
 
 export default {
@@ -193,7 +172,7 @@ export default {
       } else {
         axios({
           method: 'post',
-          url: '/api/users/signup',
+          url: '/api/auth/signup',
           data: {
             email: this.email,
             firstName: this.firstName,
@@ -201,17 +180,18 @@ export default {
             password: this.password,
             dateOfBirth: this.dateOfBirth,
           },
-        }).then(() => {
-          this.$emit('closeModal');
-        }, (error) => {
-          console.log(error);
-        });
+        }).then(
+          () => {
+            this.$emit('closeModal');
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       }
     },
   },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

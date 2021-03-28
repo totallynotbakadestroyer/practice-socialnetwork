@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import notification from '@/store/notifications';
+import notification from './notifications';
 import router from '../router/index';
 import authService from '../services/auth';
 
