@@ -23,15 +23,21 @@ module.exports = {
     },
   },
   rules: {
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
     '@typescript-eslint/no-namespace': 'off',
+    'linebreak-style': ['off'],
     'no-param-reassign': 'off',
     'no-unused-vars': 'off',
     'consistent-return': 'off',
     'import/no-cycle': 'warn',
     'global-require': 'warn',
-    'prettier/prettier': 'error',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'import/extensions': [
