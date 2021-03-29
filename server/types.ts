@@ -76,7 +76,7 @@ declare global {
 
   namespace Express {
     interface Request {
-      user: ParsedToken;
+      user?: ParsedToken;
       io: SocketIO.Server;
     }
   }
