@@ -1,9 +1,20 @@
 import { Sequelize } from 'sequelize';
 
 const setAssociations = (sequelize: Sequelize): void => {
-  const { user, userInfo, post, conversation, message, conversationParticipant } = sequelize.models;
+  const {
+    user,
+    userInfo,
+    post,
+    conversation,
+    message,
+    conversationParticipant,
+    workInfo,
+    userContacts,
+  } = sequelize.models;
   user.hasOne(userInfo, { foreignKey: 'id' });
   userInfo.belongsTo(user, { foreignKey: 'id' });
+  userInfo.hasOne(workInfo, { foreignKey: 'id', as: 'work' });
+  userInfo.hasOne(userContacts, { foreignKey: 'id', as: 'contacts' });
   userInfo.hasMany(post, { as: 'createdPosts', foreignKey: 'authorId' });
   userInfo.hasMany(post, { as: 'profilePosts', foreignKey: 'destinationUserId' });
   userInfo.belongsToMany(conversation, {

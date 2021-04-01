@@ -6,6 +6,8 @@ import post from './models/post.model';
 import conversation from './models/conversation.model';
 import message from './models/message.model';
 import conversationParticipant from './models/conversationParticipants.model';
+import workInfo from './models/workInfo.model';
+import userContacts from './models/userContacts.model';
 
 let postgresUri;
 
@@ -33,6 +35,8 @@ const setUpDb = () => {
   message(sequelize);
   conversation(sequelize);
   conversationParticipant(sequelize);
+  workInfo(sequelize);
+  userContacts(sequelize);
   setAssociations(sequelize);
 };
 

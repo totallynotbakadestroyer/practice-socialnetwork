@@ -1,23 +1,17 @@
 import { DataTypes, Sequelize } from 'sequelize';
 
 export default (sequelize: Sequelize): void => {
-  sequelize.define('userInfo', {
-    firstName: {
-      allowNull: false,
+  sequelize.define('workInfo', {
+    companyName: {
       type: DataTypes.STRING,
     },
-    lastName: {
-      allowNull: false,
+    country: {
       type: DataTypes.STRING,
     },
-    dateOfBirth: {
-      allowNull: false,
-      type: DataTypes.DATE,
-    },
-    gender: {
+    city: {
       type: DataTypes.STRING,
     },
-    avatar: {
+    position: {
       type: DataTypes.STRING,
     },
   });

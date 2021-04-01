@@ -1,23 +1,23 @@
 import { DataTypes, Sequelize } from 'sequelize';
 
 export default (sequelize: Sequelize): void => {
-  sequelize.define('userInfo', {
-    firstName: {
-      allowNull: false,
+  sequelize.define('userContacts', {
+    country: {
       type: DataTypes.STRING,
     },
-    lastName: {
-      allowNull: false,
+    city: {
       type: DataTypes.STRING,
     },
-    dateOfBirth: {
-      allowNull: false,
-      type: DataTypes.DATE,
-    },
-    gender: {
+    phoneNumber: {
       type: DataTypes.STRING,
     },
-    avatar: {
+    discordTag: {
+      type: DataTypes.STRING,
+    },
+    instagram: {
+      type: DataTypes.STRING,
+    },
+    website: {
       type: DataTypes.STRING,
     },
   });

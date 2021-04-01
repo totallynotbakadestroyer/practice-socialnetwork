@@ -1,8 +1,8 @@
 <template>
   <v-card class="about pa-4">
-    <p v-if="user.country">
+    <p v-if="user.contacts.country">
       <v-icon dense small>mdi-map-marker</v-icon>
-      {{ user.country }} {{ user.city }}
+      {{ user.contacts.country }} {{ user.contacts.city }}
     </p>
     <p v-if="user.gender">
       <v-icon dense small v-if="user.gender === 'Male'">mdi-gender-male</v-icon>
@@ -12,10 +12,6 @@
     <p v-if="user.birthday">
       <v-icon dense small>mdi-cake</v-icon>
       {{ user.birthday | formatDate }}
-    </p>
-    <p v-if="user.relationship">
-      <v-icon dense small>mdi-heart-box</v-icon>
-      {{ user.relationship }}
     </p>
     <v-divider />
     <br />
