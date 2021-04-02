@@ -2,12 +2,14 @@ import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import jwt from 'express-jwt';
+import path from 'path';
 import socketMiddleware from './middleware/socketio';
 import AuthController from './controllers/auth';
 import UserController from './controllers/user';
 import PostController from './controllers/post';
 import ConversationController from './controllers/conversation';
 import FriendshipController from './controllers/friendship';
+import ProfileController from './controllers/profile';
 
 let JWT_SECRET;
 
@@ -24,6 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(logger('dev'));
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(socketMiddleware);
 
 app.use(
@@ -37,5 +41,6 @@ app.use('/api', UserController);
 app.use('/api', PostController);
 app.use('/api', ConversationController);
 app.use('/api', FriendshipController);
+app.use('/api', ProfileController);
 
 export default app;
