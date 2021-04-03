@@ -53,6 +53,14 @@ const routes = [
     },
   },
   {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import('@/views/Settings.vue'),
+    meta: {
+      layout: 'primary',
+    },
+  },
+  {
     path: '*',
     component: () => import('@/views/NotFound.vue'),
     meta: {
