@@ -9,7 +9,7 @@ const initialUsers = [
     userInfo: {
       firstName: 'cooltest',
       lastName: 'cooluser',
-      dateOfBirth: new Date().getTime(),
+      birthday: new Date().getTime(),
       conversations: [
         {
           id: 54013,
@@ -38,7 +38,7 @@ const initialUsers = [
     userInfo: {
       firstName: 'test',
       lastName: 'user',
-      dateOfBirth: new Date().getTime(),
+      birthday: new Date().getTime(),
     },
   },
 ];
@@ -48,7 +48,7 @@ const userToCreate = {
   password: 'createdpassword',
   firstName: 'createduser',
   lastName: 'createduser',
-  dateOfBirth: new Date().getTime(),
+  birthday: new Date().getTime(),
 };
 
 const generateTestJwt = async () => {

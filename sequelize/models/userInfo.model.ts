@@ -10,7 +10,7 @@ export default (sequelize: Sequelize): void => {
       allowNull: false,
       type: DataTypes.STRING,
     },
-    dateOfBirth: {
+    birthday: {
       allowNull: false,
       type: DataTypes.DATE,
     },

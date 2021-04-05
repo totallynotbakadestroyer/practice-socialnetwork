@@ -18,7 +18,7 @@ if (process.env.JWT_SECRET) {
 interface NewUser extends UserCredentials {
   firstName: string;
   lastName: string;
-  dateOfBirth: Date;
+  birthday: Date;
 }
 
 auth.post('/auth/login', async (req, res) => {

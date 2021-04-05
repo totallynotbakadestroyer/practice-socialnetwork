@@ -71,24 +71,24 @@
           <v-menu
             ref="menu"
             :close-on-content-click="false"
-            :return-value.sync="dateOfBirth"
+            :return-value.sync="birthday"
             transition="scale-transition"
             offset-y
             min-width="290px"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                v-model="dateOfBirth"
+                v-model="birthday"
                 label="Date of birth"
                 readonly
                 v-bind="attrs"
                 v-on="on"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="dateOfBirth" no-title scrollable>
+            <v-date-picker v-model="birthday" no-title scrollable>
               <v-spacer></v-spacer>
               <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-              <v-btn text color="primary" @click="$refs.menu.save(dateOfBirth)">OK</v-btn>
+              <v-btn text color="primary" @click="$refs.menu.save(birthday)">OK</v-btn>
             </v-date-picker>
           </v-menu>
         </v-col>
@@ -119,7 +119,7 @@ export default {
   },
   data() {
     return {
-      dateOfBirth: new Date().toISOString().substr(0, 10),
+      birthday: new Date().toISOString().substr(0, 10),
       email: '',
       firstName: '',
       lastName: '',
@@ -178,7 +178,7 @@ export default {
             firstName: this.firstName,
             lastName: this.lastName,
             password: this.password,
-            dateOfBirth: this.dateOfBirth,
+            birthday: this.birthday,
           },
         }).then(
           () => {

@@ -52,7 +52,7 @@ export interface UserInfoAttributes {
   country?: string;
   city?: string;
   workPlace?: string;
-  dateOfBirth: Date;
+  birthday: Date;
   relationship?: string;
   website?: string;
   instagram?: string;
@@ -76,7 +76,7 @@ declare global {
 
   namespace Express {
     interface Request {
-      user?: ParsedToken;
+      user: ParsedToken;
       io: SocketIO.Server;
     }
   }
