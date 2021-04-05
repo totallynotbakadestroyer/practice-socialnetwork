@@ -17,7 +17,13 @@
       />
     </v-col>
     <v-col cols="12">
-      <v-select :success="isChanged('gender')" v-model="gender" outlined label="Gender" />
+      <v-select
+        :items="genders"
+        :success="isChanged('gender')"
+        v-model="gender"
+        outlined
+        label="Gender"
+      />
     </v-col>
     <v-col cols="12">
       <v-dialog ref="dialog" v-model="birthdayModal" :return-value.sync="birthday" width="290px">
@@ -33,23 +39,27 @@
         </template>
         <v-date-picker v-model="birthday" scrollable>
           <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="modal = false"> Cancel </v-btn>
+          <v-btn text color="primary" @click="birthdayModal = false"> Cancel </v-btn>
           <v-btn text color="primary" @click="$refs.dialog.save(birthday)"> OK </v-btn>
         </v-date-picker>
       </v-dialog>
     </v-col>
     <v-card-actions class="ml-auto">
-      <v-btn>cool</v-btn>
+      <v-btn @click="revertChanges">Revert changes</v-btn>
+      <v-btn @click="saveChanges">Save</v-btn>
     </v-card-actions>
   </v-row>
 </template>
 
 <script>
+import profileService from '../../services/profile';
+
 export default {
   name: 'BasicInfoSettings',
   props: ['currentFields'],
   data() {
     return {
+      genders: ['Male', 'Female'],
       birthdayModal: false,
       firstName: this.currentFields.firstName,
       lastName: this.currentFields.lastName,
@@ -63,8 +73,24 @@ export default {
     },
   },
   methods: {
-    saveChanges() {
-      console.log('saved');
+    async saveChanges() {
+      const payload = {
+        user: {
+          userInfo: {
+            firstName: this.firstName,
+            lastName: this.lastName,
+            gender: this.gender,
+            birthday: this.birthday,
+          },
+        },
+      };
+      const updatedProfile = await profileService.updateUser(payload);
+      this.$emit('updateProfile', updatedProfile);
+    },
+    revertChanges() {
+      Object.entries(this.currentFields).forEach(([key, value]) => {
+        this[key] = value;
+      });
     },
     isChanged(fieldName) {
       return this.currentFields[fieldName] !== this[fieldName];

@@ -7,7 +7,7 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>{{ currentUser }}</v-list-item-title>
+          <v-list-item-title>{{ $store.getters.getFullName }}</v-list-item-title>
           <v-list-item-subtitle @click="$store.dispatch('logout')">Logout</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -63,7 +63,6 @@ export default {
   data() {
     return {
       miniVariant: false,
-      currentUser: this.$store.getters.getFullName,
       items: [
         { title: 'My Account', icon: 'mdi-account', link: `/id${this.$store.state.id}` },
         { title: 'News Feed', icon: 'mdi-view-dashboard', link: '/feed' },

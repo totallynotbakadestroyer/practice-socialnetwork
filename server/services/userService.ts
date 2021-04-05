@@ -24,13 +24,40 @@ const findUser = async (query: Partial<UserAttributes>): Promise<any | null> => 
   return user.toJSON();
 };
 
-const createUser = async (credentials: UserCredentials, userInfo: UserInfoAttributes) => {
-  console.log(credentials);
-  return userModel.create({ ...credentials, userInfo }, { include: [userInfoModel] });
-};
+const createUser = async (credentials: UserCredentials, userInfo: UserInfoAttributes) =>
+  userModel.create(
+    {
+      ...credentials,
+      userInfo: { ...userInfo, work: {}, contacts: {} },
+    },
+    {
+      include: [
+        {
+          model: userInfoModel,
+          include: [
+            { model: workInfo, as: 'work' },
+            { model: userContacts, as: 'contacts' },
+          ],
+        },
+      ],
+    }
+  );
 
 const updateUser = async (id, updateFields) => {
-  const user = await userModel.findOne({
+  // todo: disgusting, should find a better solution
+  if (updateFields.userInfo) {
+    if (updateFields.userInfo.work) {
+      await workInfo.update(updateFields.userInfo.work, { where: { id } });
+    } else if (updateFields.userInfo.contacts) {
+      await userContacts.update(updateFields.userInfo.contacts, { where: { id } });
+    } else {
+      await userInfoModel.update(updateFields.userInfo, { where: { id } });
+    }
+  } else {
+    await userModel.update(updateFields, { where: { id } });
+  }
+
+  return userModel.findOne({
     where: { id },
     include: [
       {
@@ -42,11 +69,6 @@ const updateUser = async (id, updateFields) => {
       },
     ],
   });
-  if (!user) {
-    return null;
-  }
-  await user.update(updateFields);
-  return user.toJSON();
 };
 
 const deleteUser = async (id) => userModel.destroy({ where: { id } });

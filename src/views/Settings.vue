@@ -6,11 +6,12 @@
           <v-card outlined class="pa-6 flex-grow-1">
             <basic-info-settings
               @changedStatusChange="handleUnsavedChangesStatus"
+              @updateProfile="updateProfile"
               ref="current"
               :current-fields="{
                 firstName: this.user.userInfo.firstName,
                 lastName: this.user.userInfo.lastName,
-                birthday: this.birthday,
+                birthday: new Date(this.user.userInfo.birthday).toISOString().substring(0, 10),
                 gender: this.user.userInfo.gender,
               }"
               v-if="$route.query.section === 'profile_basic'"
@@ -23,12 +24,14 @@
             />
             <contacts-settings
               @changedStatusChange="handleUnsavedChangesStatus"
+              @updateProfile="updateProfile"
               :current-fields="{ ...user.userInfo.contacts }"
               v-else-if="$route.query.section === 'profile_contacts'"
               ref="current"
             />
             <work-settings
               @changedStatusChange="handleUnsavedChangesStatus"
+              @updateProfile="updateProfile"
               :current-fields="{ ...user.userInfo.work }"
               v-else-if="$route.query.section === 'profile_work'"
               ref="current"
@@ -51,6 +54,7 @@
 
 <script>
 import Vue from 'vue';
+import moment from 'moment';
 import SettingsMenu from '../components/Settings/SettingsMenu.vue';
 import BasicInfoSettings from '../components/Settings/BasicInfoSettings.vue';
 import AvatarSettings from '../components/Settings/AvatarSettings.vue';
@@ -87,8 +91,8 @@ export default {
     instance.$on('discardChanges', () => {
       this.unsavedChanges = false;
     });
-    instance.$on('saveChanges', () => {
-      this.$refs.current.saveChanges();
+    instance.$on('saveChanges', async () => {
+      await this.$refs.current.saveChanges();
       next();
     });
     instance.$mount();
@@ -102,6 +106,13 @@ export default {
     };
   },
   methods: {
+    moment() {
+      return moment();
+    },
+    updateProfile(data) {
+      this.user = data;
+      this.$store.dispatch('updateUserInfo', data.userInfo);
+    },
     closePopup() {
       ComponentClass = null;
       instance = null;

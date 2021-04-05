@@ -41,10 +41,16 @@
         label="Personal Website Link"
       />
     </v-col>
+    <v-card-actions class="ml-auto">
+      <v-btn @click="revertChanges">Revert changes</v-btn>
+      <v-btn @click="saveChanges">Save</v-btn>
+    </v-card-actions>
   </v-row>
 </template>
 
 <script>
+import profileService from '../../services/profile';
+
 export default {
   name: 'ContactsSettings.vue',
   props: ['currentFields'],
@@ -67,8 +73,28 @@ export default {
     isChanged(fieldName) {
       return this.currentFields[fieldName] !== this[fieldName];
     },
-    saveChanges() {
-      console.log('saved');
+    async saveChanges() {
+      const payload = {
+        user: {
+          userInfo: {
+            contacts: {
+              country: this.country,
+              city: this.city,
+              phoneNumber: this.phoneNumber,
+              discordTag: this.discordTag,
+              instagram: this.instagram,
+              website: this.website,
+            },
+          },
+        },
+      };
+      const updatedProfile = await profileService.updateUser(payload);
+      this.$emit('updateProfile', updatedProfile);
+    },
+    revertChanges() {
+      Object.entries(this.currentFields).forEach(([key, value]) => {
+        this[key] = value;
+      });
     },
   },
   watch: {

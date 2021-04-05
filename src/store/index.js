@@ -26,6 +26,9 @@ export default new Vuex.Store({
     authError(state) {
       state.status = 'error';
     },
+    updateUserInfo(state, userInfo) {
+      state.userInfo = userInfo;
+    },
     logout(state) {
       state.id = '';
       state.status = '';
@@ -46,12 +49,14 @@ export default new Vuex.Store({
       commit('logout');
       await router.push('/');
     },
+    updateUserInfo({ commit }, userInfo) {
+      commit('updateUserInfo', userInfo);
+    },
   },
   modules: {
     notification,
   },
   getters: {
-    getUserId: (state) => state.userInfo.userId,
     getFullName: (state) => `${state.userInfo.firstName}  ${state.userInfo.lastName}`,
   },
 });
