@@ -1,9 +1,16 @@
 <template>
-  <div class="d-flex flex-column">
+  <div v-if="user" class="d-flex flex-column">
     <v-container ref="container" class="flex-grow-1 d-flex" fluid>
       <v-row class="flex-grow-1">
         <v-col class="d-flex" cols="9">
           <v-card outlined class="pa-6 flex-grow-1">
+            <user-settings
+              @changedStatusChange="handleUnsavedChangesStatus"
+              @updateProfile="updateProfile"
+              :email="user.email"
+              v-if="!$route.query.section || $route.query.section === 'user_general'"
+              ref="current"
+            />
             <basic-info-settings
               @changedStatusChange="handleUnsavedChangesStatus"
               @updateProfile="updateProfile"
@@ -14,7 +21,7 @@
                 birthday: new Date(this.user.userInfo.birthday).toISOString().substring(0, 10),
                 gender: this.user.userInfo.gender,
               }"
-              v-if="$route.query.section === 'profile_basic'"
+              v-else-if="$route.query.section === 'profile_basic'"
             />
             <avatar-settings
               @changedStatusChange="handleUnsavedChangesStatus"
@@ -35,13 +42,6 @@
               @updateProfile="updateProfile"
               :current-fields="{ ...user.userInfo.work }"
               v-else-if="$route.query.section === 'profile_work'"
-              ref="current"
-            />
-            <user-settings
-              @changedStatusChange="handleUnsavedChangesStatus"
-              @updateProfile="updateProfile"
-              :email="user.email"
-              v-else-if="$route.query.section === 'user_general'"
               ref="current"
             />
           </v-card>
@@ -104,7 +104,7 @@ export default {
     return {
       unsavedChangesPopup: false,
       unsavedChanges: false,
-      user: {},
+      user: null,
     };
   },
   methods: {
