@@ -12,9 +12,9 @@ export interface UserAttributes {
   email: string;
   password: string;
   role: string;
-  isCompleted: string;
-  isBanned: string;
-  isActivated: string;
+  isCompleted: boolean;
+  isBanned: boolean;
+  isActivated: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }

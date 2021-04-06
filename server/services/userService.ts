@@ -54,7 +54,7 @@ const updateUser = async (id, updateFields) => {
       await userInfoModel.update(updateFields.userInfo, { where: { id } });
     }
   } else {
-    await userModel.update(updateFields, { where: { id } });
+    await userModel.update(updateFields, { where: { id }, individualHooks: true });
   }
 
   return userModel.findOne({

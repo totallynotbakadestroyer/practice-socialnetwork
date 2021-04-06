@@ -39,7 +39,8 @@
             />
             <user-settings
               @changedStatusChange="handleUnsavedChangesStatus"
-              :current-fields="{ ...user.userInfo.contacts }"
+              @updateProfile="updateProfile"
+              :email="user.email"
               v-else-if="$route.query.section === 'user_general'"
               ref="current"
             />

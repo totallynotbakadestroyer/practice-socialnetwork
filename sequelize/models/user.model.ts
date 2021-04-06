@@ -49,4 +49,12 @@ export default (sequelize: Sequelize): void => {
   user.beforeCreate(async (newUser) => {
     newUser.password = await bcrypt.hash(newUser.password, 10);
   });
+  user.beforeUpdate(async (newUser) => {
+    if (newUser.changed('email')) {
+      newUser.isActivated = false;
+    }
+    if (newUser.changed('password')) {
+      newUser.password = await bcrypt.hash(newUser.password, 10);
+    }
+  });
 };
