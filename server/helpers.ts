@@ -1,3 +1,7 @@
+import { randomBytes } from 'crypto';
+import path from 'path';
+import * as fs from 'fs';
+import retry from 'async-await-retry';
 import { getUserById } from './socket';
 import sequelize from '../sequelize';
 
@@ -24,8 +28,7 @@ export const isUserParticipant = async (conversationId, userId) => {
   return conversation;
 };
 
-export const generateId = () =>
-  Date.now().toString(36) + Math.random().toString(36).substr(2, 5).toUpperCase();
+export const generateId = (size = 16): string => randomBytes(size).toString('hex');
 
 const generateNotification = (type, currentUserId, conversation, message) => {
   switch (type) {
@@ -62,4 +65,26 @@ export const sendNotificationToConversationParticipants = async (
       socket.emit('notification', notification);
     }
   });
+};
+
+const generateFileName = (name) => {
+  const newFileName = generateId(64) + name.substring(name.lastIndexOf('.'));
+  return new Promise((resolve, reject) => {
+    fs.access(path.join(__dirname, './public/images/avatars', newFileName), (error) => {
+      if (error) return resolve(newFileName);
+      reject(Error);
+    });
+  });
+};
+
+export const uploadAvatar = async (avatarFile) => {
+  avatarFile.name = await retry(generateFileName, [avatarFile.name], { retriesMax: 5 });
+  await avatarFile.mv(path.join(__dirname, './public/images/avatars', avatarFile.name));
+  return {
+    user: {
+      userInfo: {
+        avatar: path.join('/images/avatars', avatarFile.name),
+      },
+    },
+  };
 };

@@ -1,6 +1,6 @@
 <template>
   <v-card class="about pa-4">
-    <p v-if="user.contacts.country">
+    <p v-if="user.contacts">
       <v-icon dense small>mdi-map-marker</v-icon>
       {{ user.contacts.country }} {{ user.contacts.city }}
     </p>
@@ -20,7 +20,7 @@
       <a>some link</a>
     </div>
     <v-divider />
-    <div v-if="user.id === $store.state.id" class="d-flex flex-column mt-4">
+    <div v-if="user.id !== $store.state.id" class="d-flex flex-column mt-4">
       <send-message-profile-button class-name="mb-4" :user="user" />
       <v-btn>Add as friend</v-btn>
     </div>

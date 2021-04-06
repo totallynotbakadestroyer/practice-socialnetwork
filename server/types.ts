@@ -1,5 +1,6 @@
 import { BuildOptions, Model } from 'sequelize';
 import SocketIO from 'socket.io';
+import fileUpload from 'express-fileupload';
 
 export interface UserCredentials {
   email: string;
@@ -78,6 +79,7 @@ declare global {
     interface Request {
       user: ParsedToken;
       io: SocketIO.Server;
+      files?: fileUpload.FileArray;
     }
   }
 }

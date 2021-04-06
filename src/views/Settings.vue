@@ -18,6 +18,7 @@
             />
             <avatar-settings
               @changedStatusChange="handleUnsavedChangesStatus"
+              @updateProfile="updateProfile"
               :avatar="this.user.userInfo.avatar"
               v-else-if="$route.query.section === 'profile_avatar'"
               ref="current"
