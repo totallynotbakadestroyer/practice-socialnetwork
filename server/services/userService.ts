@@ -51,7 +51,7 @@ const updateUser = async (id, updateFields) => {
     } else if (updateFields.userInfo.contacts) {
       await userContacts.update(updateFields.userInfo.contacts, { where: { id } });
     } else {
-      await userInfoModel.update(updateFields.userInfo, { where: { id } });
+      await userInfoModel.update(updateFields.userInfo, { where: { id }, individualHooks: true });
     }
   } else {
     await userModel.update(updateFields, { where: { id }, individualHooks: true });

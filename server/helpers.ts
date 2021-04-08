@@ -88,3 +88,6 @@ export const uploadAvatar = async (avatarFile) => {
     },
   };
 };
+
+export const deleteAvatar = async (avatarPath) =>
+  fs.promises.unlink(path.join(__dirname, './public', avatarPath));

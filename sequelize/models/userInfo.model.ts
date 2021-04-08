@@ -1,7 +1,8 @@
 import { DataTypes, Sequelize } from 'sequelize';
+import { deleteAvatar } from '../../server/helpers';
 
 export default (sequelize: Sequelize): void => {
-  sequelize.define('userInfo', {
+  const userInfo = <any>sequelize.define('userInfo', {
     firstName: {
       allowNull: false,
       type: DataTypes.STRING,
@@ -20,5 +21,12 @@ export default (sequelize: Sequelize): void => {
     avatar: {
       type: DataTypes.STRING,
     },
+  });
+  userInfo.afterUpdate(async (updatedInfo) => {
+    console.log(updatedInfo);
+    if (updatedInfo.changed('avatar')) {
+      const avatar = updatedInfo.previous('avatar');
+      await deleteAvatar(avatar).catch((e) => undefined);
+    }
   });
 };
