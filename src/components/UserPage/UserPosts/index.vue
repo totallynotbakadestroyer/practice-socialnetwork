@@ -20,16 +20,16 @@ export default {
     };
   },
   methods: {
-    async createPost(payload) {
-      const { id } = this.$router.currentRoute.params;
-      const createdPost = await postService.createPost(id, payload);
-      this.posts.unshift(createdPost.data);
+    createPost(payload) {
+      console.log(payload);
+      this.posts.unshift(payload);
     },
   },
-  async mounted() {
+  async beforeMount() {
     const { id } = this.$router.currentRoute.params;
     const posts = await postService.getPosts(id);
-    this.posts = posts.data;
+    console.log(posts);
+    this.posts = posts;
   },
 };
 </script>
