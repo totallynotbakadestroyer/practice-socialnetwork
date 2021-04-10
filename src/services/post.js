@@ -1,9 +1,10 @@
 import axios from '@/services/axiosInstance';
 
-const getPosts = async (userId, offset, limit) => {
+const getPosts = async (userId, after, limit) => {
   const { data } = await axios().get('/posts', {
-    params: { userId, offset, limit },
+    params: { userId, after, limit },
   });
+  console.log(data);
   return data;
 };
 

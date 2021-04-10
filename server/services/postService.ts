@@ -1,17 +1,17 @@
 import sequelize from '../../sequelize';
 import { PostModel } from '../types';
 
-const postModel = sequelize.models.post;
+const postModel: any = sequelize.models.post;
 const userInfoModel = sequelize.models.userInfo;
 
-const findUserPosts = async (userId: string, limit: string | number, offset: string | number) => {
+const findUserPosts = async (userId: string, limit: string | number, after: string) => {
   limit = limit === undefined ? 10 : Number(limit);
-  offset = offset === undefined ? 0 : Number(offset);
-  return postModel.findAll({
-    offset,
+  return postModel.paginate({
     limit,
     where: { destinationUserId: userId },
     include: [{ model: userInfoModel, as: 'author' }],
+    order: [['createdAt', 'DESC']],
+    after,
   });
 };
 

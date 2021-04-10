@@ -3,6 +3,7 @@ import Vuelidate from 'vuelidate';
 import SocketIO from 'socket.io-client';
 import Axios from 'axios';
 import VueSocketIO from 'vue-socket.io';
+import InfiniteLoading from 'vue-infinite-loading';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -11,6 +12,7 @@ import vuetify from './plugins/vuetify';
 Vue.config.productionTip = false;
 
 Vue.use(Vuelidate);
+Vue.use(InfiniteLoading);
 
 const socketConnection = SocketIO('http://localhost:8889', { autoConnect: false });
 
