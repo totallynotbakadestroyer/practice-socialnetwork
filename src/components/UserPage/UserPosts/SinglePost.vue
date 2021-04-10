@@ -69,7 +69,7 @@ export default {
   props: ['post'],
   filters: {
     formatDate(date) {
-      return moment(new Date(date)).format('MM/DD/Y h:m a');
+      return moment(new Date(date)).format('MM/DD/Y hh:mm a');
     },
   },
 };
